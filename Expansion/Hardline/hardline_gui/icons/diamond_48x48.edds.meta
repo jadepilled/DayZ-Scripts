@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{E0B8878D1742E21F}DayZExpansion/Hardline/GUI/icons/diamond_48x48.edds"
+ Author "monolith"
+ ChangeDate -580161194
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "diamond_48x48.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

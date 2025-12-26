@@ -1,0 +1,22 @@
+{
+    "compress": {
+        "exclude": [
+        ],
+        "include": [
+        ]
+    },
+    "headers": [
+        {
+            "name": "prefix",
+            "value": "DayZExpansion\\VanillaFixes\\GUI"
+        },
+        {
+            "name": "Mikero",
+            "value": "DePbo.dll.7.92"
+        },
+        {
+            "name": "version",
+            "value": "22092320"
+        }
+    ]
+}

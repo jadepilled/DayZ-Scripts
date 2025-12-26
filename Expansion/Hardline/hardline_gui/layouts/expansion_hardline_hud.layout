@@ -1,0 +1,146 @@
+FrameWidgetClass ExpansionHardlineHUD {
+ visible 1
+ clipchildren 0
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ scriptclass "ExpansionHardlineHUDController"
+ {
+  PanelWidgetClass NotifiersPanel {
+   visible 1
+   clipchildren 0
+   inheritalpha 0
+   ignorepointer 1
+   position 40 31
+   size 35 81
+   halign right_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   fixaspect fixwidth
+   priority 100
+   {
+    PanelWidgetClass Reputation {
+     visible 0
+     clipchildren 0
+     inheritalpha 0
+     ignorepointer 1
+     size 35 80
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     fixaspect fixwidth
+     style blank
+     {
+      ImageWidgetClass ReputationIcon {
+       disabled 0
+       clipchildren 1
+       inheritalpha 0
+       ignorepointer 1
+       keepsafezone 0
+       color 0.8627 0.8627 0.8627 1
+       size 35 35
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       fixaspect fixwidth
+       scriptclass "ViewBinding"
+       image0 "{5A608B8E5F095FC6}DayZExpansion/Core/GUI/icons/hud/Reputation-Stars.edds"
+       mode blend
+       "src alpha" 1
+       "clamp mode" clamp
+       "stretch mode" stretch_w_h
+       "flip u" 0
+       "flip v" 0
+       filter 1
+       nocache 0
+       {
+        ScriptParamsClass {
+         Binding_Name "ReputationIcon"
+        }
+       }
+      }
+      TextWidgetClass ReputationVal {
+       ignorepointer 1
+       color 0.8627 0.8627 0.8627 1
+       position 0 36
+       size 80 20
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       scriptclass "ViewBinding"
+       "text halign" center
+       "text valign" center
+       {
+        ScriptParamsClass {
+         Binding_Name "ReputationVal"
+        }
+       }
+      }
+      PanelWidgetClass ReputationChange {
+       visible 1
+       clipchildren 0
+       ignorepointer 1
+       position 0 -24
+       size 80 20
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       {
+        TextWidgetClass ReputationChangeVal {
+         visible 1
+         ignorepointer 1
+         keepsafezone 1
+         color 0.8627 0.8627 0.8627 0
+         position -4 0
+         size 80 20
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         scriptclass "ViewBinding"
+         "text halign" center
+         "text valign" center
+         {
+          ScriptParamsClass {
+           Binding_Name "ReputationChangeValue"
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  ImageWidgetClass CoveredIndicator {
+   visible 1
+   clipchildren 0
+   position 0 -2
+   size 32 9
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   image0 "{A86A06F14A0DABC8}DayZExpansion/Core/GUI/icons/hud/under-roof.edds"
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+ }
+}
