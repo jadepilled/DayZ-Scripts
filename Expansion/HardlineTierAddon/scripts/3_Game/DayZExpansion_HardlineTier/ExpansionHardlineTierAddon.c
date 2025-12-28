@@ -1,7 +1,7 @@
 /**
  * ExpansionHardlineTierAddon.c
  */
-static const string EXPANSION_HARDLINE_TIER_FOLDER = "$profile:HardlineTiers/";
+static const string EXPANSION_HARDLINE_TIER_FOLDER = "$profile:HardlineTiers\\";
 static const string EXPANSION_HARDLINE_TIER_SETTINGS = EXPANSION_HARDLINE_TIER_FOLDER + "HardlineTierSettings.json";
 
 class ExpansionHardlineTierAddon
