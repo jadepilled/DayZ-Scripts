@@ -26,8 +26,7 @@ Update 2.0 patch notes:
 ref ExpansionAI_Mission AIMissions = new ExpansionAI_Mission();
 
 modded class MissionServer
-{
-    override void OnInit()
+			{    override void OnInit()
 	{
         super.OnInit();
         AIMissions.OnInit();
@@ -35,8 +34,7 @@ modded class MissionServer
 }
 
 class ExpansionAI_Mission
-{
-	ref array<ref AIM_Missions> AIM_MissionsArray = new ref array<ref AIM_Missions>();
+			{	ref array<ref AIM_Missions> AIM_MissionsArray = new ref array<ref AIM_Missions>();
 
 	bool AIM_IsFirstStartup = true;
 	bool AIM_Debug = false
@@ -94,7 +92,7 @@ class ExpansionAI_Mission
 			
 			Print("[AI Missions] DEBUG MODE ENABLED.");
 			
-			if(GetAIMConfig().Settings.Get(0).DebugQuickmode())
+				if(GetAIMConfig().Settings.Get(0).DebugQuickmode())
 			{
 				AIM_DebugQuickMode = true;
 				
@@ -141,7 +139,7 @@ class ExpansionAI_Mission
 
 		if(!CanStartAIMission(ChosenNewMissionID))
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Failed to start new Mission ID '" + ChosenNewMissionID + "'."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Failed to start new Mission ID '" + ChosenNewMissionID + "'."); //Debug
 			
 			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(StartAIMission, GetAIMConfig().Settings.Get(0).GetFailStartDelay() * 1000, false); //Retry starting AI mission
 
@@ -179,20 +177,20 @@ class ExpansionAI_Mission
 			int AIM_MarkerGreen = GetAIMConfig().Settings.Get(0).GetMarkerGreen();
 			int AIM_MarkerBlue = GetAIMConfig().Settings.Get(0).GetMarkerBlue();
 			
-			if(AIM_MarkerRadius < 0) AIM_MarkerRadius = 0;
-			if(AIM_MarkerAlpha < 0) AIM_MarkerAlpha = 0;
+				if(AIM_MarkerRadius < 0) AIM_MarkerRadius = 0;
+				if(AIM_MarkerAlpha < 0) AIM_MarkerAlpha = 0;
 			else if(AIM_MarkerAlpha > 255) AIM_MarkerAlpha = 255;
-			if(AIM_MarkerRed < 0) AIM_MarkerRed = 0;
+				if(AIM_MarkerRed < 0) AIM_MarkerRed = 0;
 			else if(AIM_MarkerRed > 255) AIM_MarkerRed = 255;
-			if(AIM_MarkerGreen < 0) AIM_MarkerGreen = 0;
+				if(AIM_MarkerGreen < 0) AIM_MarkerGreen = 0;
 			else if(AIM_MarkerGreen > 255) AIM_MarkerGreen = 255;
-			if(AIM_MarkerBlue < 0) AIM_MarkerBlue = 0;
+				if(AIM_MarkerBlue < 0) AIM_MarkerBlue = 0;
 			else if(AIM_MarkerBlue > 255) AIM_MarkerBlue = 255;
 			
 			#ifdef LBmaster_Groups
 			Print("[AI Missions] DEBUG - Detected LBMaster Groups for marker."); //Debug
 			
-			if(AIM_MarkerString == "") AIM_MarkerString = "LBmaster_Groups\\gui\\icons\\player.paa";
+				if(AIM_MarkerString == "") AIM_MarkerString = "LBmaster_Groups\\gui\\icons\\player.paa";
 			
 			LBServerMarker AIM_SVMarker;
 			
@@ -208,7 +206,7 @@ class ExpansionAI_Mission
 			#ifdef EXPANSIONMODNAVIGATION
 			Print("[AI Missions] DEBUG - Detected Expansion Navigation for marker."); //Debug
 			
-			if(AIM_MarkerString == "") AIM_MarkerString = "Soldier";
+				if(AIM_MarkerString == "") AIM_MarkerString = "Soldier";
 			
 			vector misionPos = GetAIMConfig().Missions.Get(ChosenNewMissionID).GetPosition();
 			
@@ -249,7 +247,7 @@ class ExpansionAI_Mission
 		
 		for(int i=0; i<AIM_MissionsArray.Count(); i++)
 		{
-			if(AIM_MissionsArray.Get(i).GetMissionID() == proposedmissionID)
+				if(AIM_MissionsArray.Get(i).GetMissionID() == proposedmissionID)
 			{
 				Print("[AI Missions] Missions with this ID is already in progress. Retrying in " + GetAIMConfig().Settings.Get(0).GetFailStartDelay() + " seconds.");
 
@@ -259,7 +257,7 @@ class ExpansionAI_Mission
 		
 		if(GetAIMConfig().Missions.Get(proposedmissionID).GetName() == "")
 		{
-			if(AIM_IsFirstStartup) Print("[AI Missions] Mission name undefined, unable to start mission. Retrying in " + GetAIMConfig().Settings.Get(0).GetStartDelay() + " seconds.");
+				if(AIM_IsFirstStartup) Print("[AI Missions] Mission name undefined, unable to start mission. Retrying in " + GetAIMConfig().Settings.Get(0).GetStartDelay() + " seconds.");
 			else Print("[AI Missions] Mission name undefined, unable to start mission. Retrying in " + GetAIMConfig().Settings.Get(0).GetFailStartDelay() + " seconds.");
 
 			return false;
@@ -267,7 +265,7 @@ class ExpansionAI_Mission
 
 		if(GetGame().GetFps() > 2) // Server FPS too low
 		{
-			if(AIM_IsFirstStartup) Print("[AI Missions] Unable to start new mission as server FPS is too low. Retrying in " + GetAIMConfig().Settings.Get(0).GetStartDelay() + " seconds.");
+				if(AIM_IsFirstStartup) Print("[AI Missions] Unable to start new mission as server FPS is too low. Retrying in " + GetAIMConfig().Settings.Get(0).GetStartDelay() + " seconds.");
 			else Print("[AI Missions] Unable to start new mission as server FPS is too low. Retrying in " + GetAIMConfig().Settings.Get(0).GetFailStartDelay() + " seconds.");
 
 			return false;
@@ -278,7 +276,7 @@ class ExpansionAI_Mission
 
 		if(all_players.Count() < GetAIMConfig().Settings.Get(0).GetMinPlayers()) // Not enough players
 		{
-			if(AIM_IsFirstStartup) Print("[AI Missions] Not enough players to start mission. Retrying in " + GetAIMConfig().Settings.Get(0).GetStartDelay() + " seconds.");
+				if(AIM_IsFirstStartup) Print("[AI Missions] Not enough players to start mission. Retrying in " + GetAIMConfig().Settings.Get(0).GetStartDelay() + " seconds.");
 			else Print("[AI Missions] Not enough players to start mission. Retrying in " + GetAIMConfig().Settings.Get(0).GetFailStartDelay() + " seconds.");
 
 			return false;
@@ -287,7 +285,7 @@ class ExpansionAI_Mission
 		for(int j=0; j<all_players.Count(); j++) // Player in spawn area check
 		{
 			PlayerBase player = PlayerBase.Cast(all_players.Get(j));
-			if(player)
+				if(player)
 			{
 				if(vector.Distance(GetAIMConfig().Missions.Get(proposedmissionID).GetPosition(), player.GetPosition()) <= (GetAIMConfig().Missions.Get(proposedmissionID).GetAIRange() + 200))
 				{
@@ -337,7 +335,7 @@ class ExpansionAI_Mission
 		
 		for(int m=0; m<AIM_MissionsArray.Count(); m++)
 		{
-			if(AIM_MissionsArray.Get(m).GetIsCleanedUp()) continue;
+				if(AIM_MissionsArray.Get(m).GetIsCleanedUp()) continue;
 			
 			bool FoundPlayerInInnerRadius = false;
 			bool FoundPlayerInSpawnRadius = false;
@@ -356,7 +354,7 @@ class ExpansionAI_Mission
 		
 			eAIBase TempEAIBase;
 
-			if(GetAIMConfig().Settings.Get(0).DebugIgnoreRadius() || AIM_DebugQuickMode) // Debug Modes
+				if(GetAIMConfig().Settings.Get(0).DebugIgnoreRadius() || AIM_DebugQuickMode) // Debug Modes
 			{
 				FoundPlayerInInnerRadius = false; //During debug we force mission to ignore any close players so it force despawns.
 				FoundPlayerInSpawnRadius = true; //During debug we force AI to spawn no matter if players are close or not.
@@ -367,7 +365,7 @@ class ExpansionAI_Mission
 				if(IsPlayerInRadius(MissionPos, GetAIMConfig().Settings.Get(0).GetSpawnRadius())) FoundPlayerInSpawnRadius = true;
 			}
 		
-			if((AIM_MissionsArray.Get(m).AIM_EAIArray.Count() <= RemainingBots) && FoundPlayerInSpawnRadius && !IsPendingFinish)
+				if((AIM_MissionsArray.Get(m).AIM_EAIArray.Count() <= RemainingBots) && FoundPlayerInSpawnRadius && !IsPendingFinish)
 			{
 				//Spawn missing bots
 				for(int k=0; k<(RemainingBots - AIM_MissionsArray.Get(m).AIM_EAIArray.Count()); k++)
@@ -382,7 +380,7 @@ class ExpansionAI_Mission
 				}
 			}
 
-			if(AIM_MissionsArray.Get(m).AIM_EAIArray.Count() > 0)
+				if(AIM_MissionsArray.Get(m).AIM_EAIArray.Count() > 0)
 			{
 				array<eAIBase> TempEAIArray = new array<eAIBase>;
 				array<int> TempWanderTimeArray = new array<int>;
@@ -459,7 +457,7 @@ class ExpansionAI_Mission
 				AIM_MissionsArray.Get(m).AIM_EAIWanderTimeArray = TempWanderTimeArray;
 			}
 		
-			if((RemainingBots <= 0) && !IsPendingFinish) //Win
+				if((RemainingBots <= 0) && !IsPendingFinish) //Win
 			{
 				Print("[AI Missions] Mission " + GetAIMConfig().Missions.Get(MissionID).GetName() + " completed.");
 				
@@ -522,7 +520,7 @@ class ExpansionAI_Mission
 				IsPendingFinish = true;
 			}
 		
-			if((AIM_MissionToRemove == -1) && IsPendingFinish && (!FoundPlayerInInnerRadius || (CurrentMissionTime >= (GetAIMConfig().Settings.Get(0).GetTimeLimit() + GetAIMConfig().Settings.Get(0).GetCleanupTimeRunning()))))
+				if((AIM_MissionToRemove == -1) && IsPendingFinish && (!FoundPlayerInInnerRadius || (CurrentMissionTime >= (GetAIMConfig().Settings.Get(0).GetTimeLimit() + GetAIMConfig().Settings.Get(0).GetCleanupTimeRunning()))))
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Mission is over, and safe to pre-clean up!"); //Debug
 				
@@ -561,13 +559,13 @@ class ExpansionAI_Mission
 			
 			CurrentMissionTime += 1;
 			
-			if(RemainingBotsIn != RemainingBots) AIM_MissionsArray.Get(m).SetRemainingBots(RemainingBots);
+				if(RemainingBotsIn != RemainingBots) AIM_MissionsArray.Get(m).SetRemainingBots(RemainingBots);
 
 			AIM_MissionsArray.Get(m).SetCurrentMissionTime(CurrentMissionTime);
 			AIM_MissionsArray.Get(m).SetCurrentMissionTimeExtension(CurrentMissionExtensionTime);
 			AIM_MissionsArray.Get(m).SetMissionPendingFinish(IsPendingFinish);
 
-			if(AIM_MissionToRemove != -1)
+				if(AIM_MissionToRemove != -1)
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Removing mission from missions array: " + AIM_MissionToRemove + " (Mission ID: " + AIM_MissionsArray.Get(AIM_MissionToRemove).GetMissionID() + ")"); //Debug
 				AIM_MissionsArray.Remove(AIM_MissionToRemove);
@@ -591,7 +589,7 @@ class ExpansionAI_Mission
 		
 		if(!Class.CastTo(m_ExpansionAINPC, GetGame().CreateObject(GetRandomAI(), botSpawnPos)))
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Failed to spawn new EAI NPC"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Failed to spawn new EAI NPC"); //Debug
 			
 			return NULL;
 		}
@@ -624,15 +622,15 @@ class ExpansionAI_Mission
 		
 		if(ExpansionLoadoutString != "")
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Filling new EAI NPC with Epansion Loadout: " + ExpansionLoadoutString); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Filling new EAI NPC with Epansion Loadout: " + ExpansionLoadoutString); //Debug
 			HasExpansionLoadout = ExpansionHumanLoadout.Apply(m_ExpansionAINPC, ExpansionLoadoutString);
 		}
 		
 		if(!HasExpansionLoadout)
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Dressing up new EAI NPC with random loadout"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Dressing up new EAI NPC with random loadout"); //Debug
 			
-			if(GetAIMConfig().Missions.Get(m_MissionID).IsNBCMission())
+				if(GetAIMConfig().Missions.Get(m_MissionID).IsNBCMission())
 			{
 				TStringArray nbcLoadout = GetAIMConfig().Loadouts.Get(0).GetNBC_Loadout();
 				
@@ -673,9 +671,9 @@ class ExpansionAI_Mission
 				if(GetAIMConfig().Loadouts.Get(0).Headgear.Get(k).GetLoadoutID() == LoadoutID) allowed_headgear.Insert(k);
 			}
 			
-			if(allowed_weapons.Count() > 0)
+				if(allowed_weapons.Count() > 0)
 			{
-				int ChosenWeaponID = allowed_weapons.Get(Math.RandomInt(0,allowed_weapons.Count()));
+			int ChosenWeaponID = allowed_weapons.Get(Math.RandomInt(0,allowed_weapons.Count()));
 
 				string Weap_Class = GetAIMConfig().Loadouts.Get(0).Weapons.Get(ChosenWeaponID).GetClassName();
 				string Weap_Mag = GetAIMConfig().Loadouts.Get(0).Weapons.Get(ChosenWeaponID).GetMagClassName();
@@ -721,9 +719,9 @@ class ExpansionAI_Mission
 				}
 			}
 
-			if(allowed_armour.Count() > 0)
+				if(allowed_armour.Count() > 0)
 			{
-				int ChosenArmourID = allowed_armour.Get(Math.RandomInt(0,allowed_armour.Count()));
+			int ChosenArmourID = allowed_armour.Get(Math.RandomInt(0,allowed_armour.Count()));
 				
 				string Armour_Class = GetAIMConfig().Loadouts.Get(0).Armour.Get(ChosenArmourID).GetClassName();
 				TStringArray Armour_Attachments = GetAIMConfig().Loadouts.Get(0).Armour.Get(ChosenArmourID).GetAttachments();
@@ -765,9 +763,9 @@ class ExpansionAI_Mission
 				}
 			}
 
-			if(allowed_headgear.Count())
+				if(allowed_headgear.Count())
 			{
-				int ChosenHeadgearID = allowed_headgear.Get(Math.RandomInt(0,allowed_headgear.Count()));
+			int ChosenHeadgearID = allowed_headgear.Get(Math.RandomInt(0,allowed_headgear.Count()));
 				
 				string Headgear_Class = GetAIMConfig().Loadouts.Get(0).Headgear.Get(ChosenHeadgearID).GetClassName();
 				bool AddNVG = GetAIMConfig().Loadouts.Get(0).Headgear.Get(ChosenHeadgearID).GiveNVG();
@@ -849,7 +847,7 @@ class ExpansionAI_Mission
 
 		if(AIM_IsFirstStartup)
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - First startup cleanup in progress!"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - First startup cleanup in progress!"); //Debug
 			for(int i=0; i<GetAIMConfig().RewardObjects.Count(); i++)
 			{
 				for(int j=0; j<GetAIMConfig().Missions.Count(); j++)
@@ -904,11 +902,11 @@ class ExpansionAI_Mission
 			AIM_MissionsArray.Get(m_MissionID).SetIsCleanedUp();
 			
 			int m_MissionConfigID = AIM_MissionsArray.Get(m_MissionID).GetMissionID();
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Mission cleanup script is now cleaning up reward from ended mission " + m_MissionConfigID); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Mission cleanup script is now cleaning up reward from ended mission " + m_MissionConfigID); //Debug
 			
 			EntityAI tempMissionRewardEAI = EntityAI.Cast(AIM_MissionsArray.Get(m_MissionID).GetMissionRewardEAI());
 			
-			if(tempMissionRewardEAI)
+				if(tempMissionRewardEAI)
 			{
 				if(vector.Distance(tempMissionRewardEAI.GetPosition(), GetAIMConfig().Missions.Get(m_MissionConfigID).GetPosition()) <= GetAIMConfig().Settings.Get(0).GetCleanupRadiusRunning())
 				{
@@ -932,7 +930,7 @@ class ExpansionAI_Mission
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Mission cleanup script could not find previous mission reward for cleanup."); //Debug
 			}
 
-			if(AIM_MissionsArray.Get(m_MissionID).AIM_ObjectsArray.Count() > 0)
+				if(AIM_MissionsArray.Get(m_MissionID).AIM_ObjectsArray.Count() > 0)
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Mission cleanup script is now cleaning up static objects from previous mission."); //Debug
 				
@@ -957,7 +955,7 @@ class ExpansionAI_Mission
 		}
 		else
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Mission cleanup script did not run (not first startup, or mission ID not provided)!"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Mission cleanup script did not run (not first startup, or mission ID not provided)!"); //Debug
 			return;
 		}
 				
@@ -973,7 +971,7 @@ class ExpansionAI_Mission
 		
 		for(int i=0; i<GetAIMConfig().RewardObjects.Count(); i++)
 		{
-			if(GetAIMConfig().RewardObjects.Get(i).GetRewardType() == 0)
+				if(GetAIMConfig().RewardObjects.Get(i).GetRewardType() == 0)
 			{
 				allowed_rewards.Insert(i);
 			}
@@ -1015,18 +1013,18 @@ class ExpansionAI_Mission
 
 			tempreward.SetOrientation(Vector(Math.RandomInt(0,360),0,0));
 			
-			if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetRewardType() == 0)
+				if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetRewardType() == 0)
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned reward ID '" + m_MissionRewardID + "' (" + GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetClassname() + ") which is a special (scripted) reward! No loot to fill for now."); //Debug
-				return; // Special item, we're done here.
+					return; // Special item, we're done here.
 			}
 			
-			if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetRewardType() == 1)
+				if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetRewardType() == 1)
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned reward ID '" + m_MissionRewardID + "' (" + GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetClassname() + ") which is a crate!"); //Debug
 			}
 
-			if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetRewardType() == 2)
+				if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetRewardType() == 2)
 			{
 				CarScript tempvehicle = CarScript.Cast(tempreward);
 				
@@ -1039,7 +1037,7 @@ class ExpansionAI_Mission
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned reward ID '" + m_MissionRewardID + "' (" + GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetClassname() + ") which is a vehicle reward! Drained all fuel so it can't easily be taken."); //Debug
 			}
 
-			if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetLootInit().Count() > 0)
+				if(GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetLootInit().Count() > 0)
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Attempting to fill reward with " + GetAIMConfig().RewardObjects.Get(m_MissionRewardID).GetLootInit().Count() + " initial items."); //Debug
 
@@ -1050,7 +1048,7 @@ class ExpansionAI_Mission
 				}
 			}
 
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned reward object ID '" + m_MissionRewardID + "'."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned reward object ID '" + m_MissionRewardID + "'."); //Debug
 		}
 	}
 
@@ -1062,7 +1060,7 @@ class ExpansionAI_Mission
 			int m_MissionID = AIM_MissionsArray.Get(m_NewMissionID).GetMissionID();
 			int objCount = 0;
 			
-			if(GetAIMConfig().Missions.Get(m_MissionID).Static_Objects.Count() > 0)
+				if(GetAIMConfig().Missions.Get(m_MissionID).Static_Objects.Count() > 0)
 			{
 				if(GetAIMConfig().Missions.Get(m_MissionID).Static_Objects.Count() > 0)
 				{
@@ -1103,7 +1101,7 @@ class ExpansionAI_Mission
 				}
 			}
 			
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Spawned " + objCount + " objects."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Spawned " + objCount + " objects."); //Debug
 		}
 	}
 
@@ -1114,28 +1112,28 @@ class ExpansionAI_Mission
 		
 		if(!Class.Cast(m_MissionRewardEAI))
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Reward object not found! Unable to release reward.");
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Reward object not found! Unable to release reward.");
 
 			return;
 		}
 		
 		if(m_RewardID == -1)
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Reward not defined! Unable to release reward.");
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Reward not defined! Unable to release reward.");
 
 			return;
 		}
 		
 		if(vector.Distance(m_MissionRewardEAI.GetPosition(), GetAIMConfig().Missions.Get(m_MissionID).GetPosition()) >= GetAIMConfig().Settings.Get(0).GetCleanupRadiusRunning())
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Reward object has been moved outside of cleanup radius! Unable to release reward.");
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Reward object has been moved outside of cleanup radius! Unable to release reward.");
 			
 			return;
 		}
 
 		if(GetAIMConfig().RewardObjects.Get(m_RewardID).GetNewClassname() != "")
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Swapping mission reward object to '" + GetAIMConfig().RewardObjects.Get(m_RewardID).GetNewClassname() + "'"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Swapping mission reward object to '" + GetAIMConfig().RewardObjects.Get(m_RewardID).GetNewClassname() + "'"); //Debug
 			
 			//Do this first, to replace the reward item if a new classname is defined.
 			EntityAI tempnewreward = EntityAI.Cast(GetGame().CreateObject(GetAIMConfig().RewardObjects.Get(m_RewardID).GetNewClassname(), m_MissionRewardEAI.GetPosition()));
@@ -1145,26 +1143,26 @@ class ExpansionAI_Mission
 			
 			m_MissionRewardEAI = tempnewreward;
 			
-			if(!Class.Cast(m_MissionRewardEAI))
+				if(!Class.Cast(m_MissionRewardEAI))
 			{
 				if(AIM_Debug) Print("[AI Missions] DEBUG - Swapping mission reward object unsuccessful. Unable to complete releasing reward."); //Debug
-				return;
+					return;
 			}
 			
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Swapping mission reward object successful!"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Swapping mission reward object successful!"); //Debug
 		}
 
 		if(GetAIMConfig().RewardObjects.Get(m_RewardID).GetRewardType() == 0)
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Mission reward object is special (scripted). Reward released successfully."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Mission reward object is special (scripted). Reward released successfully."); //Debug
 			
 			return; // Special item, we're done here.
 		}
 
 		if(Class.Cast(m_MissionRewardEAI)) //Check it still exists
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Found mission reward object, filling with loot!"); //Debug
-			if(GetAIMConfig().RewardObjects.Get(m_RewardID).GetLootWin().Count() > 0)
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Found mission reward object, filling with loot!"); //Debug
+				if(GetAIMConfig().RewardObjects.Get(m_RewardID).GetLootWin().Count() > 0)
 			{
 				for(int i=0; i<GetAIMConfig().RewardObjects.Get(m_RewardID).GetLootWin().Count(); i++)
 				{
@@ -1174,11 +1172,11 @@ class ExpansionAI_Mission
 				}
 			}
 
-			FillRewards(m_MissionRewardEAI, 0, AIM_MissionsArray.Get(m_MissionArrayID).GetTotalBots())
-			FillRewards(m_MissionRewardEAI, 1, AIM_MissionsArray.Get(m_MissionArrayID).GetTotalBots())
-			FillRewards(m_MissionRewardEAI, 2, AIM_MissionsArray.Get(m_MissionArrayID).GetTotalBots())
+		FillRewards(m_MissionRewardEAI, 0, AIM_MissionsArray.Get(m_MissionArrayID).GetTotalBots(), m_MissionID);
+		FillRewards(m_MissionRewardEAI, 1, AIM_MissionsArray.Get(m_MissionArrayID).GetTotalBots(), m_MissionID);
+		FillRewards(m_MissionRewardEAI, 2, AIM_MissionsArray.Get(m_MissionArrayID).GetTotalBots(), m_MissionID);
 
-			if(GetAIMConfig().RewardObjects.Get(m_RewardID).GetRewardType() == 2)
+				if(GetAIMConfig().RewardObjects.Get(m_RewardID).GetRewardType() == 2)
 			{
 				CarScript tempvehicle = CarScript.Cast(m_MissionRewardEAI);
 				if(tempvehicle)
@@ -1193,73 +1191,77 @@ class ExpansionAI_Mission
 					tempvehicle.Fill(CarFluid.BRAKE, brakeReq);
 				}
 			}
-		}
+			}
 	}
 
-	//Function to fill reward with defined items. Condensed to one function
-	void FillRewards(EntityAI m_MissionRewardEAI, int m_RewardType, int m_AIQuantity)
-	{
-		int rewardqty = 0;
+		//Function to fill reward with defined items. Condensed to one function
+		void FillRewards(EntityAI m_MissionRewardEAI, int m_RewardType, int m_AIQuantity, int m_MissionID)
+		{
+			int rewardqty = 0;
+				if (GetAIMConfig().Loot.Count() == 0)
+				{
+					return;
+				}
 		if(m_RewardType == 0) {	//weapons
 			rewardqty = Math.Round(m_AIQuantity * GetAIMConfig().Settings.Get(0).GetLootWeaponsMultiplier());
-			if(rewardqty < GetAIMConfig().Settings.Get(0).GetLootWeaponsMin()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootWeaponsMin();
-			if(rewardqty > GetAIMConfig().Settings.Get(0).GetLootWeaponsMax()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootWeaponsMax();
+				if(rewardqty < GetAIMConfig().Settings.Get(0).GetLootWeaponsMin()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootWeaponsMin();
+				if(rewardqty > GetAIMConfig().Settings.Get(0).GetLootWeaponsMax()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootWeaponsMax();
 
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Spawning " + rewardqty + " weapons into reward object inventory."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Spawning " + rewardqty + " weapons into reward object inventory."); //Debug
 		}
 		else if(m_RewardType == 1) //armour
 		{
 			rewardqty = Math.Round(m_AIQuantity * GetAIMConfig().Settings.Get(0).GetLootArmourMultiplier());
-			if(rewardqty < GetAIMConfig().Settings.Get(0).GetLootArmourMin()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootArmourMin();
-			if(rewardqty > GetAIMConfig().Settings.Get(0).GetLootArmourMax()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootArmourMax();
+				if(rewardqty < GetAIMConfig().Settings.Get(0).GetLootArmourMin()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootArmourMin();
+				if(rewardqty > GetAIMConfig().Settings.Get(0).GetLootArmourMax()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootArmourMax();
 
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Spawning " + rewardqty + " armour into reward object inventory."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Spawning " + rewardqty + " armour into reward object inventory."); //Debug
 		}
 		else if(m_RewardType == 2) //misc
 		{
 			rewardqty = Math.Round(m_AIQuantity * GetAIMConfig().Settings.Get(0).GetLootMiscMultiplier());
-			if(rewardqty < GetAIMConfig().Settings.Get(0).GetLootMiscMin()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootMiscMin();
-			if(rewardqty > GetAIMConfig().Settings.Get(0).GetLootMiscMax()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootMiscMax();
+				if(rewardqty < GetAIMConfig().Settings.Get(0).GetLootMiscMin()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootMiscMin();
+				if(rewardqty > GetAIMConfig().Settings.Get(0).GetLootMiscMax()) rewardqty = GetAIMConfig().Settings.Get(0).GetLootMiscMax();
 
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Spawning " + rewardqty + " misc into reward object inventory."); //Debug
-		}
-		
-		for(int i=0; i<rewardqty; i++)
-		{
-			int randnum;
-			string classname;
-			string magclassname;
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Spawning " + rewardqty + " misc into reward object inventory."); //Debug
+}
+
+			int missionLootTier = GetAIMConfig().Missions.Get(m_MissionID).GetLootTier();
+			missionLootTier = Math.Clamp(missionLootTier, 0, GetAIMConfig().Loot.Count() - 1);
+
+			for(int i=0; i<rewardqty; i++)
+			{
+				int randnum;
+				string classname;
+				string magclassname;
 			TStringArray attachments = new TStringArray();
 			TStringArray loot = new TStringArray();
 			EntityAI tempreward;
 			EntityAI tempEAI;
 			
-			if(m_RewardType == 0) //weapons
-			{
-				randnum = Math.RandomInt(0,GetAIMConfig().Loot.Get(0).Weapons.Count());
-				classname = GetAIMConfig().Loot.Get(0).Weapons.Get(randnum).GetClassname();
-				magclassname = GetAIMConfig().Loot.Get(0).Weapons.Get(randnum).GetMagClassName();
-				attachments = GetAIMConfig().Loot.Get(0).Weapons.Get(randnum).GetAttachments();
-				loot = GetAIMConfig().Loot.Get(0).Weapons.Get(randnum).GetLoot();
-			}
-			else if(m_RewardType == 1) //armour
-			{
-				randnum = Math.RandomInt(0,GetAIMConfig().Loot.Get(0).Armour.Count());
-				classname = GetAIMConfig().Loot.Get(0).Armour.Get(randnum).GetClassname();
-				attachments = GetAIMConfig().Loot.Get(0).Armour.Get(randnum).GetAttachments();
-				loot = GetAIMConfig().Loot.Get(0).Armour.Get(randnum).GetLoot();
-			}
-			else if(m_RewardType == 2) //misc
-			{
-				randnum = Math.RandomInt(0,GetAIMConfig().Loot.Get(0).Misc.Count());
-				classname = GetAIMConfig().Loot.Get(0).Misc.Get(randnum).GetClassname();
-				attachments = GetAIMConfig().Loot.Get(0).Misc.Get(randnum).GetAttachments();
-				loot = GetAIMConfig().Loot.Get(0).Misc.Get(randnum).GetLoot();
-			}
+if(m_RewardType == 0) //weapons
+			{randnum = Math.RandomInt(0,GetAIMConfig().Loot.Get(missionLootTier).Weapons.Count());
+classname = GetAIMConfig().Loot.Get(missionLootTier).Weapons.Get(randnum).GetClassname();
+magclassname = GetAIMConfig().Loot.Get(missionLootTier).Weapons.Get(randnum).GetMagClassName();
+attachments = GetAIMConfig().Loot.Get(missionLootTier).Weapons.Get(randnum).GetAttachments();
+loot = GetAIMConfig().Loot.Get(missionLootTier).Weapons.Get(randnum).GetLoot();
+}
+else if(m_RewardType == 1) //armour
+			{randnum = Math.RandomInt(0,GetAIMConfig().Loot.Get(missionLootTier).Armour.Count());
+classname = GetAIMConfig().Loot.Get(missionLootTier).Armour.Get(randnum).GetClassname();
+attachments = GetAIMConfig().Loot.Get(missionLootTier).Armour.Get(randnum).GetAttachments();
+loot = GetAIMConfig().Loot.Get(missionLootTier).Armour.Get(randnum).GetLoot();
+}
+else if(m_RewardType == 2) //misc
+			{randnum = Math.RandomInt(0,GetAIMConfig().Loot.Get(missionLootTier).Misc.Count());
+classname = GetAIMConfig().Loot.Get(missionLootTier).Misc.Get(randnum).GetClassname();
+attachments = GetAIMConfig().Loot.Get(missionLootTier).Misc.Get(randnum).GetAttachments();
+loot = GetAIMConfig().Loot.Get(missionLootTier).Misc.Get(randnum).GetLoot();
+}
 
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Adding item to reward object inventory '" + classname + "'"); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Adding item to reward object inventory '" + classname + "'"); //Debug
 
-			if(Class.CastTo(tempreward, m_MissionRewardEAI.GetInventory().CreateInInventory(classname)))	// NEW <- At this line you have a freaking awesome trouble it's missed ')', that ruins of code!
+				if(Class.CastTo(tempreward, m_MissionRewardEAI.GetInventory().CreateInInventory(classname)))	// NEW <- At this line you have a freaking awesome trouble it's missed ')', that ruins of code!
 			{
 				Weapon_Base weapontemp;
 				if(Class.CastTo(weapontemp, tempreward))
@@ -1327,15 +1329,15 @@ class ExpansionAI_Mission
 		
 		if(m_RewardType == 0) //weapons
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned all weapons into reward object."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned all weapons into reward object."); //Debug
 		}
 		else if(m_RewardType == 1) //armour
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned all armour into reward object."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned all armour into reward object."); //Debug
 		}
 		else if(m_RewardType == 2) //misc
 		{
-			if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned all misc into reward object."); //Debug
+				if(AIM_Debug) Print("[AI Missions] DEBUG - Successfully spawned all misc into reward object."); //Debug
 		}
 	}
 	
@@ -1352,8 +1354,7 @@ class ExpansionAI_Mission
 }
 
 class AIM_Missions
-{
-	ref array<eAIBase> AIM_EAIArray = new array<eAIBase>;
+			{	ref array<eAIBase> AIM_EAIArray = new array<eAIBase>;
 	ref array<int> AIM_EAIWanderTimeArray = new array<int>;
 	ref array<Object> AIM_ObjectsArray = new array<Object>;
 	
