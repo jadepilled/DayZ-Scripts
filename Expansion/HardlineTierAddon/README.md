@@ -9,14 +9,21 @@ This addon layers on top of Expansion Hardline to give every item a **tier level
 - Inspection panels add a white `Tier X` stat line so players can see the level alongside other Hardline details.
 
 ## Customizing tiers
-Edit `Expansion/HardlineTierAddon/scripts/3_Game/DayZExpansion_HardlineTier/ExpansionHardlineTierAddon.c` and add entries to `s_ItemTierOverrides`:
+The addon writes and reads `HardlineTierSettings.json` from your Expansion mission settings folder (same place as the built-in Hardline settings). Update that file on the server to add or adjust tiers without rebuilding the mod:
 
-```c
-s_ItemTierOverrides.Insert("m4a1", 6);
-s_ItemTierOverrides.Insert("huntingknife", 2);
+```json
+{
+    "m_Version": 1,
+    "ItemTiers": {
+        "m4a1": 6,
+        "huntingknife": 2,
+        "platecarriervest": 5
+    }
+}
 ```
 
-Class names are matched case-insensitively.
+- Class names are matched case-insensitively.
+- The file is created with sample entries on first run if it does not already exist.
 
 ## Load order
 Include the addon after `@Expansion`/`@ExpansionHardline` so the base Hardline types load first:
