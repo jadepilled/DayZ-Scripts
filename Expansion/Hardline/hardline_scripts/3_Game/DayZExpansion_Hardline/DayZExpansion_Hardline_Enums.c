@@ -13,16 +13,25 @@
 //! @note Rarity is encoded in 4 bits in market module, so please limit to 16 rarities!
 enum ExpansionHardlineItemRarity
 {
-	NONE,
-	Poor,
-	Common,
-	Uncommon,
-	Rare,
-	Epic,
-	Legendary,
-	Mythic,
-	Exotic,
-	Quest,
-	Collectable,
-	Ingredient,
+NONE,
+Poor,
+Common,
+Uncommon,
+Rare,
+Epic,
+Legendary,
+Mythic,
+Exotic,
+Quest,
+Collectable,
+Ingredient,
+};
+
+enum ExpansionHardlineItemTier
+{
+Tier1,
+Tier2,
+Tier3,
+Tier4,
+Tier5,
 };

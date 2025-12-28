@@ -18,12 +18,20 @@ class ExpansionHardlineSettingsV8
 	int ReputationOnKillAI;
 }
 
+class ExpansionHardlineTierSettings
+{
+	ExpansionHardlineItemTier DefaultItemTier;
+	bool ItemTierParentSearch;
+
+	ref map<string, ExpansionHardlineItemTier> ItemTier = new map<string, ExpansionHardlineItemTier>;
+}
+
 /**@class		ExpansionHardlineSettings
  * @brief		Hardline settings class
  **/
 class ExpansionHardlineSettings: ExpansionSettingBase
 {
-	static const int VERSION = 11;
+	static const int VERSION = 12;
 
 	int PoorItemRequirement;
 	int CommonItemRequirement;
@@ -47,22 +55,25 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 
 	int MaxReputation;
 	int ReputationLossOnDeath;
-	
+
 	ExpansionHardlineItemRarity DefaultItemRarity;
+	ExpansionHardlineItemTier DefaultItemTier;
 	bool ItemRarityParentSearch;
+	bool ItemTierParentSearch;
 
 	ref map<string, int> EntityReputation = new map<string, int>;
 
 	ref map<string, ExpansionHardlineItemRarity> ItemRarity = new map<string, ExpansionHardlineItemRarity>;
+	ref map<string, ExpansionHardlineItemTier> ItemTier = new map<string, ExpansionHardlineItemTier>;
 
 	[NonSerialized()]
 	private bool m_IsLoaded;
 
 	override bool OnRecieve( ParamsReadContext ctx )
-	{
-	#ifdef EXPANSIONTRACE
-		auto trace = CF_Trace_1(ExpansionTracing.SETTINGS, this).Add(ctx);
-	#endif
+{
+#ifdef EXPANSIONTRACE
+auto trace = CF_Trace_1(ExpansionTracing.SETTINGS, this).Add(ctx);
+#endif
 		
 		if (!ctx.Read(PoorItemRequirement))
 		{
@@ -162,12 +173,84 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 			return false;
 		}
 
-		if (!ctx.Read(DefaultItemRarity))
-		{
-			Error(ToString() + "::OnRecieve DefaultItemRarity");
-			return false;
-		}
+if (!ctx.Read(DefaultItemRarity))
+{
+Error(ToString() + "::OnRecieve DefaultItemRarity");
+return false;
+}
 
+		if (!ctx.Read(ItemRarityParentSearch))
+		{
+		Error(ToString() + "::OnRecieve ItemRarityParentSearch");
+		return false;
+		}
+		
+		if (!ctx.Read(DefaultItemTier))
+		{
+		Error(ToString() + "::OnRecieve DefaultItemTier");
+		return false;
+		}
+		
+		if (!ctx.Read(ItemTierParentSearch))
+		{
+		Error(ToString() + "::OnRecieve ItemTierParentSearch");
+		return false;
+		}
+		
+		int itemTierCount;
+		if (!ctx.Read(itemTierCount))
+		{
+		Error(ToString() + "::OnRecieve ItemTierCount");
+		return false;
+		}
+		
+		ItemTier.Clear();
+		for (int tierIndex = 0; tierIndex < itemTierCount; tierIndex++)
+		{
+		string tierClassName;
+		ExpansionHardlineItemTier itemTier;
+		if (!ctx.Read(tierClassName))
+		{
+		Error(ToString() + "::OnRecieve ItemTier Class");
+		return false;
+		}
+		
+		if (!ctx.Read(itemTier))
+		{
+		Error(ToString() + "::OnRecieve ItemTier Value");
+		return false;
+		}
+		
+		AddItemTier(tierClassName, itemTier);
+		}
+		
+		int itemRarityCount;
+		if (!ctx.Read(itemRarityCount))
+		{
+		Error(ToString() + "::OnRecieve ItemRarityCount");
+		return false;
+		}
+		
+		ItemRarity.Clear();
+		for (int rarityIndex = 0; rarityIndex < itemRarityCount; rarityIndex++)
+		{
+		string rarityClassName;
+		ExpansionHardlineItemRarity itemRarity;
+		if (!ctx.Read(rarityClassName))
+		{
+		Error(ToString() + "::OnRecieve ItemRarity Class");
+		return false;
+		}
+		
+		if (!ctx.Read(itemRarity))
+		{
+		Error(ToString() + "::OnRecieve ItemRarity Value");
+		return false;
+		}
+		
+		AddItem(rarityClassName, itemRarity);
+		}
+		
 		m_IsLoaded = true;
 
 		ExpansionSettings.SI_Hardline.Invoke();
@@ -176,33 +259,52 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 	}
 
 	override void OnSend( ParamsWriteContext ctx )
-	{
-	#ifdef EXPANSIONTRACE
+		{
+		#ifdef EXPANSIONTRACE
 		auto trace = CF_Trace_1(ExpansionTracing.SETTINGS, this).Add(ctx);
-	#endif
-		
-		ctx.Write(PoorItemRequirement);
-		ctx.Write(CommonItemRequirement);
-		ctx.Write(UncommonItemRequirement);
-		ctx.Write(RareItemRequirement);
-		ctx.Write(EpicItemRequirement);
-		ctx.Write(LegendaryItemRequirement);
-		ctx.Write(MythicItemRequirement);
-		ctx.Write(ExoticItemRequirement);
-		
-		ctx.Write(ShowHardlineHUD);
-		ctx.Write(UseReputation);
-	#ifdef EXPANSIONMODAI
-		ctx.Write(UseFactionReputation);
-	#endif
-		ctx.Write(EnableItemRarity);
-		ctx.Write(UseItemRarityOnInventoryIcons);
+		#endif
+				
+				ctx.Write(PoorItemRequirement);
+				ctx.Write(CommonItemRequirement);
+				ctx.Write(UncommonItemRequirement);
+				ctx.Write(RareItemRequirement);
+				ctx.Write(EpicItemRequirement);
+				ctx.Write(LegendaryItemRequirement);
+				ctx.Write(MythicItemRequirement);
+				ctx.Write(ExoticItemRequirement);
+				
+				ctx.Write(ShowHardlineHUD);
+				ctx.Write(UseReputation);
+			#ifdef EXPANSIONMODAI
+				ctx.Write(UseFactionReputation);
+			#endif
+				ctx.Write(EnableItemRarity);
+				ctx.Write(UseItemRarityOnInventoryIcons);
 		ctx.Write(UseItemRarityForMarketPurchase);
 		ctx.Write(UseItemRarityForMarketSell);
 		ctx.Write(MaxReputation);
 		ctx.Write(DefaultItemRarity);
-	}
-
+		ctx.Write(ItemRarityParentSearch);
+		ctx.Write(DefaultItemTier);
+		ctx.Write(ItemTierParentSearch);
+		
+		int itemTierCount = ItemTier.Count();
+		ctx.Write(itemTierCount);
+		for (int tierIndex = 0; tierIndex < itemTierCount; tierIndex++)
+		{
+		ctx.Write(ItemTier.GetKey(tierIndex));
+		ctx.Write(ItemTier.GetElement(tierIndex));
+		}
+		
+		int itemRarityCount = ItemRarity.Count();
+		ctx.Write(itemRarityCount);
+		for (int rarityIndex = 0; rarityIndex < itemRarityCount; rarityIndex++)
+		{
+		ctx.Write(ItemRarity.GetKey(rarityIndex));
+		ctx.Write(ItemRarity.GetElement(rarityIndex));
+		}
+		}
+		
 	override int Send( PlayerIdentity identity )
 	{
 	#ifdef EXPANSIONTRACE
@@ -247,10 +349,14 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		ReputationLossOnDeath = s.ReputationLossOnDeath;
 
 		DefaultItemRarity = s.DefaultItemRarity;
-		
+		DefaultItemTier = s.DefaultItemTier;
+		ItemRarityParentSearch = s.ItemRarityParentSearch;
+		ItemTierParentSearch = s.ItemTierParentSearch;
+
 		EntityReputation = s.EntityReputation;
 		ItemRarity = s.ItemRarity;
-	}
+		ItemTier = s.ItemTier;
+}
 
 	override bool IsLoaded()
 	{
@@ -271,17 +377,19 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		m_IsLoaded = true;
 
 		bool save;
+		bool saveTierSettings;
 		bool hardlineSettingsExist = FileExist(EXPANSION_HARDLINE_SETTINGS);
+		bool hardlineTierSettingsExist = FileExist(EXPANSION_HARDLINE_TIER_SETTINGS);
 
 		if (hardlineSettingsExist)
 		{
 			EXPrint("[ExpansionHardlineSettings] Load existing setting file:" + EXPANSION_HARDLINE_SETTINGS);
 
 			ExpansionJsonFileParser<ExpansionHardlineSettings>.Load(EXPANSION_HARDLINE_SETTINGS, this);
-			if (m_Version < VERSION)
-			{
-				ExpansionHardlineSettings settingsDefault = new ExpansionHardlineSettings;
-				settingsDefault.Defaults();
+		if (m_Version < VERSION)
+		{
+		ExpansionHardlineSettings settingsDefault = new ExpansionHardlineSettings;
+		settingsDefault.Defaults();
 
 				EXPrint("[ExpansionHardlineSettings] Load - Converting v" + m_Version + " \"" + EXPANSION_HARDLINE_SETTINGS + "\" to v" + VERSION);
 
@@ -309,21 +417,50 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 					}
 				}
 				
-				if (m_Version < 10)
-					DefaultItemRarity = settingsDefault.DefaultItemRarity;
-				
-				if (m_Version < 11)
-					ItemRarityParentSearch = settingsDefault.ItemRarityParentSearch;
+		if (m_Version < 10)
+		DefaultItemRarity = settingsDefault.DefaultItemRarity;
 
-				m_Version = VERSION;
-				save = true;
-			}
+		if (m_Version < 11)
+		ItemRarityParentSearch = settingsDefault.ItemRarityParentSearch;
+
+		if (m_Version < 12)
+		{
+		DefaultItemTier = settingsDefault.DefaultItemTier;
+		ItemTierParentSearch = settingsDefault.ItemTierParentSearch;
+		ItemTier = settingsDefault.ItemTier;
+		saveTierSettings = true;
+		}
+
+		m_Version = VERSION;
+		save = true;
+		}
 		}
 		else
 		{
-			EXPrint("[ExpansionHardlineSettings] No existing setting file:" + EXPANSION_HARDLINE_SETTINGS + ". Creating defaults!");
-			Defaults();
-			save = true;
+		EXPrint("[ExpansionHardlineSettings] No existing setting file:" + EXPANSION_HARDLINE_SETTINGS + ". Creating defaults!");
+		Defaults();
+		save = true;
+		saveTierSettings = true;
+		}
+
+		ExpansionHardlineTierSettings tierSettings = new ExpansionHardlineTierSettings;
+		tierSettings.DefaultItemTier = DefaultItemTier;
+		tierSettings.ItemTierParentSearch = ItemTierParentSearch;
+		tierSettings.ItemTier.Copy(ItemTier);
+
+		if (hardlineTierSettingsExist)
+		{
+		EXPrint("[ExpansionHardlineSettings] Load existing setting file:" + EXPANSION_HARDLINE_TIER_SETTINGS);
+
+		ExpansionJsonFileParser<ExpansionHardlineTierSettings>.Load(EXPANSION_HARDLINE_TIER_SETTINGS, tierSettings);
+		DefaultItemTier = tierSettings.DefaultItemTier;
+		ItemTierParentSearch = tierSettings.ItemTierParentSearch;
+		ItemTier = tierSettings.ItemTier;
+		}
+		else
+		{
+		EXPrint("[ExpansionHardlineSettings] No existing setting file:" + EXPANSION_HARDLINE_TIER_SETTINGS + ". Creating defaults!");
+		saveTierSettings = true;
 		}
 
 		//! Make sure item classnames are lowercase
@@ -332,23 +469,45 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		ItemRarity.Clear();
 		foreach (string className, ExpansionHardlineItemRarity rarity: itemRarity)
 		{
-			AddItem(className, rarity);
+		AddItem(className, rarity);
+		}
+
+		map<string, ExpansionHardlineItemTier> itemTier = new map<string, ExpansionHardlineItemTier>;
+		itemTier.Copy(ItemTier);
+		ItemTier.Clear();
+		foreach (string classNameTier, ExpansionHardlineItemTier tier: itemTier)
+		{
+		AddItemTier(classNameTier, tier);
 		}
 
 		if (save)
-			Save();
+		Save();
 
-		return hardlineSettingsExist;
-	}
+		if (saveTierSettings || save)
+		SaveItemTierSettings();
+
+		return hardlineSettingsExist && hardlineTierSettingsExist;
+		}
 
 	override bool OnSave()
 	{
 		Print("[ExpansionHardlineSettings] Saving settings");
 
 		JsonFileLoader<ExpansionHardlineSettings>.JsonSaveFile( EXPANSION_HARDLINE_SETTINGS, this );
+		SaveItemTierSettings();
 
 		return true;
-	}
+}
+
+	protected void SaveItemTierSettings()
+	{
+		ExpansionHardlineTierSettings tierSettings = new ExpansionHardlineTierSettings;
+		tierSettings.DefaultItemTier = DefaultItemTier;
+		tierSettings.ItemTierParentSearch = ItemTierParentSearch;
+		tierSettings.ItemTier = ItemTier;
+
+		JsonFileLoader<ExpansionHardlineTierSettings>.JsonSaveFile(EXPANSION_HARDLINE_TIER_SETTINGS, tierSettings);
+}
 
 	override void Update( ExpansionSettingBase setting )
 	{
@@ -392,16 +551,20 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 
 		DefaultItemRarity = ExpansionHardlineItemRarity.Common;
 		ItemRarityParentSearch = false;
-		
+
+		DefaultItemTier = ExpansionHardlineItemTier.Tier1;
+		ItemTierParentSearch = false;
+
 		DefaultEntityReputation();
 
 		DefaultItemRarity();
-	}
+		DefaultItemTier();
+}
 
-	protected void DefaultEntityReputation()
-	{
-		//! Player
-		EntityReputation.Insert("PlayerBase", 100);
+protected void DefaultEntityReputation()
+{
+//! Player
+EntityReputation.Insert("PlayerBase", 100);
 
 		//! Specific animals
 		EntityReputation.Insert("Animal_GallusGallusDomesticus", 1);
@@ -421,12 +584,19 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		//! All other Infected
 		EntityReputation.Insert("ZombieBase", 10);
 
-		//! AI
-		EntityReputation.Insert("eAIBase", 100);
-	}
+//! AI
+EntityReputation.Insert("eAIBase", 100);
+}
 
-	protected void DefaultItemRarity()
-	{
+	protected void DefaultItemTier()
+{
+		ItemTier.Clear();
+
+		AddItemTier("ItemBase", ExpansionHardlineItemTier.Tier1);
+}
+
+protected void DefaultItemRarity()
+{
 	#ifdef NAMALSK_SURVIVAL
 		//! Namalsk Consumables
 		AddItem("dzn_Canteen", ExpansionHardlineItemRarity.Rare);
@@ -2488,36 +2658,62 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 	#endif
 	}
 
-	void AddItem(string type, ExpansionHardlineItemRarity rarity)
-	{
-		type.ToLower();
-		ItemRarity.Insert(type, rarity);
-	}
+        void AddItem(string type, ExpansionHardlineItemRarity rarity)
+        {
+                type.ToLower();
+                ItemRarity.Insert(type, rarity);
+        }
 
-	override string SettingName()
-	{
-		return "Hardline Settings";
-	}
+        void AddItemTier(string type, ExpansionHardlineItemTier tier)
+        {
+                type.ToLower();
+                ItemTier.Insert(type, tier);
+        }
 
-	ExpansionHardlineItemRarity GetItemRarityByType(string type)
-	{
-		type.ToLower();
+        override string SettingName()
+        {
+                return "Hardline Settings";
+        }
 
-		ExpansionHardlineItemRarity rarity;
-		if (ItemRarity.Find(type, rarity))
-			return rarity;
+        ExpansionHardlineItemRarity GetItemRarityByType(string type)
+        {
+                type.ToLower();
 
-		if (ItemRarityParentSearch)
-		{
-			foreach (string baseClassType, ExpansionHardlineItemRarity baseRarity: ItemRarity)
-			{
-				if (ExpansionStatic.Is(type, baseClassType))
-					return baseRarity;
-			}
-		}
+                ExpansionHardlineItemRarity rarity;
+                if (ItemRarity.Find(type, rarity))
+                        return rarity;
 
-		return DefaultItemRarity;
-	}
+                if (ItemRarityParentSearch)
+                {
+                        foreach (string baseClassType, ExpansionHardlineItemRarity baseRarity: ItemRarity)
+                        {
+                                if (ExpansionStatic.Is(type, baseClassType))
+                                        return baseRarity;
+                        }
+                }
+
+                return DefaultItemRarity;
+        }
+
+        ExpansionHardlineItemTier GetItemTierByType(string type)
+        {
+                type.ToLower();
+
+                ExpansionHardlineItemTier tier;
+                if (ItemTier.Find(type, tier))
+                        return tier;
+
+                if (ItemTierParentSearch)
+                {
+                        foreach (string baseClassType, ExpansionHardlineItemTier baseTier: ItemTier)
+                        {
+                                if (ExpansionStatic.Is(type, baseClassType))
+                                        return baseTier;
+                        }
+                }
+
+                return DefaultItemTier;
+        }
 
 	int GetReputationForRarity(ExpansionHardlineItemRarity rarity)
 	{
