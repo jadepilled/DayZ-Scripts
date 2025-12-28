@@ -13,7 +13,7 @@ class CfgMods
 {
     class ExpansionHardlineTierAddon
     {
-        dir = "Expansion/HardlineTierAddon";
+        dir = "HardlineTierAddon";
         picture = "";
         hideName = 1;
         hidePicture = 1;
@@ -30,7 +30,7 @@ class CfgMods
             class gameScriptModule
             {
                 value = "";
-                files[] = {"Expansion/HardlineTierAddon/hardline_tiers_scripts/3_Game"};
+                files[] = {"HardlineTierAddon/hardline_tiers_scripts/3_Game"};
             };
         };
     };

@@ -11,4 +11,4 @@ enum ExpansionHardlineItemTier
     Elite,
     Prototype,
     Legendary,
-}
+};

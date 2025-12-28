@@ -14,7 +14,7 @@ class ExpansionHardlineItemTierColor
     static const int Elite = ARGB(255, 255, 128, 0);
     static const int Prototype = ARGB(255, 199, 38, 81);
     static const int Legendary = ARGB(255, 241, 196, 15);
-}
+};
 
 //! Tier text configuration
 class ExpansionHardlineItemTierText
@@ -25,4 +25,4 @@ class ExpansionHardlineItemTierText
     static const string Elite = "Elite";
     static const string Prototype = "Prototype";
     static const string Legendary = "Legendary";
-}
+};
