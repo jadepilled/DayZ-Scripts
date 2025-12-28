@@ -1,7 +1,8 @@
 /**
  * ExpansionHardlineTierAddon.c
  */
-static const string EXPANSION_HARDLINE_TIER_SETTINGS = EXPANSION_MISSION_SETTINGS_FOLDER + "HardlineTierSettings.json";
+static const string EXPANSION_HARDLINE_TIER_FOLDER = "$profile:HardlineTiers/";
+static const string EXPANSION_HARDLINE_TIER_SETTINGS = EXPANSION_HARDLINE_TIER_FOLDER + "HardlineTierSettings.json";
 
 class ExpansionHardlineTierAddon
 {
@@ -19,12 +20,10 @@ class ExpansionHardlineTierAddon
 
         s_ItemTierOverrides = new map<string, int>();
 
-        if (GetGame() && GetGame().IsServer())
-        {
-            s_Settings = ExpansionHardlineTierSettings.Load();
-            if (s_Settings && s_Settings.ItemTiers)
-                s_ItemTierOverrides.Copy(s_Settings.ItemTiers);
-        }
+        s_Settings = ExpansionHardlineTierSettings.Load();
+
+        if (s_Settings && s_Settings.ItemTiers)
+            s_ItemTierOverrides.Copy(s_Settings.ItemTiers);
 
         if (!s_ItemTierOverrides.Count())
         {
@@ -46,5 +45,25 @@ class ExpansionHardlineTierAddon
 
         // Fallback: derive a simple tier from rarity so every item has a value.
         return Math.Clamp(rarity, 0, EXPANSION_MAX_TIER);
+    }
+
+    static int GetTierBackgroundColor(int tier)
+    {
+        InitDefaults();
+
+        if (s_Settings)
+            return s_Settings.GetTierBackgroundColor(tier);
+
+        return ARGB(200, 20, 20, 20);
+    }
+
+    static int GetTierTextColor(int tier)
+    {
+        InitDefaults();
+
+        if (s_Settings)
+            return s_Settings.GetTierTextColor(tier);
+
+        return ARGB(255, 255, 255, 255);
     }
 }

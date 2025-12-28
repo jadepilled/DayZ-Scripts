@@ -19,7 +19,7 @@ modded class ExpansionItemInspectionBase
             return;
 
         string text = "Tier " + tierLevel.ToString();
-        ExpansionItemTooltipStatElement element = new ExpansionItemTooltipStatElement(text, ARGB(255, 255, 255, 255));
+        ExpansionItemTooltipStatElement element = new ExpansionItemTooltipStatElement(text, ExpansionHardlineTierAddon.GetTierTextColor(tierLevel));
         m_ItemInspectionController.ItemElements.Insert(element);
     }
 }

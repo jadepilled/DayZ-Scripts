@@ -36,6 +36,11 @@ modded class InspectMenuNew
             string text = "Tier " + tierLevel.ToString();
             tierElement.Show(true);
             WidgetTrySetText(root_widget, "ItemTierWidget", text);
+            tierElement.SetColor(ExpansionHardlineTierAddon.GetTierBackgroundColor(tierLevel));
+
+            TextWidget tierText = TextWidget.Cast(tierElement.FindAnyWidget("ItemTierWidget"));
+            if (tierText)
+                tierText.SetColor(ExpansionHardlineTierAddon.GetTierTextColor(tierLevel));
             return;
         }
 
