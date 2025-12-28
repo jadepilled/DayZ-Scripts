@@ -5,6 +5,8 @@ protected int m_CurrentWaypointIndex = -1;
 protected Object m_EscortTarget;
 protected float m_AdvanceRadius = 40.0;
 protected float m_SpawnRadius = 125.0;
+protected float m_PlayerCheckInterval = 2.0;
+protected float m_PlayerCheckTimer;
 
 void DAMEscortMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, array<vector> path)
 {
@@ -34,13 +36,42 @@ Print(string.Format("[DAM] Escort mission %1 started with %2 path points", m_Mis
 
 override protected void OnTick(float deltaTime)
 {
-if (!m_EscortTarget)
+if (!IsTargetAlive())
 {
 FailMission("Escort target lost");
 return;
 }
 
-HandleWaypointProgress();
+HandleWaypointProgress(deltaTime);
+}
+
+override protected void OnThink()
+{
+if (!IsTargetAlive())
+{
+FailMission("Escort target killed");
+return;
+}
+
+if (m_CurrentWaypointIndex < 0 || m_CurrentWaypointIndex >= m_PathPoints.Count())
+{
+return;
+}
+
+m_PlayerCheckTimer -= 1.0;
+if (m_PlayerCheckTimer > 0)
+{
+return;
+}
+
+m_PlayerCheckTimer = m_PlayerCheckInterval;
+float distance = GetClosestPlayerDistance(m_PathPoints[m_CurrentWaypointIndex]);
+if (distance <= m_AdvanceRadius)
+{
+AdvanceEscortToWaypoint(m_PathPoints[m_CurrentWaypointIndex]);
+SpawnEscortEncounter(m_PathPoints[m_CurrentWaypointIndex]);
+m_CurrentWaypointIndex++;
+}
 }
 
 override protected void OnComplete()
@@ -69,19 +100,12 @@ Print(string.Format("[DAM] Spawned escort target for %1 at %2", m_MissionId, spa
 }
 }
 
-protected void HandleWaypointProgress()
+protected void HandleWaypointProgress(float deltaTime)
 {
 if (m_CurrentWaypointIndex < 0 || m_CurrentWaypointIndex >= m_PathPoints.Count())
 {
 CompleteMission();
 return;
-}
-
-vector waypoint = m_PathPoints[m_CurrentWaypointIndex];
-if (vector.Distance(m_EscortTarget.GetPosition(), waypoint) <= m_AdvanceRadius)
-{
-SpawnEscortEncounter(waypoint);
-m_CurrentWaypointIndex++;
 }
 }
 
@@ -93,6 +117,45 @@ for (int i = 0; i < aiCount; i++)
 vector spawnPos = FindRandomizedPosition(waypoint, m_SpawnRadius);
 SpawnPresetAI(spawnPos);
 }
+}
+
+protected void AdvanceEscortToWaypoint(vector waypoint)
+{
+if (!m_EscortTarget)
+{
+return;
+}
+
+m_EscortTarget.SetPosition(waypoint);
+}
+
+protected float GetClosestPlayerDistance(vector toPoint)
+{
+float closest = Math.POSITIVE_INFINITY;
+array<Man> players = new array<Man>();
+GetGame().GetPlayers(players);
+
+for (int i = 0; i < players.Count(); i++)
+{
+float distance = vector.Distance(players[i].GetPosition(), toPoint);
+if (distance < closest)
+{
+closest = distance;
+}
+}
+
+return closest;
+}
+
+protected bool IsTargetAlive()
+{
+EntityAI entity;
+if (Class.CastTo(entity, m_EscortTarget))
+{
+return entity.IsAlive();
+}
+
+return false;
 }
 
 protected void SpawnPresetAI(vector position)
@@ -108,6 +171,8 @@ protected Object m_TargetVehicle;
 protected float m_AttackRadius = 1000.0;
 protected ref array<Object> m_ActiveAttackers = new array<Object>();
 protected ref DAMVehicleRewardSettings m_VehicleSettings;
+protected float m_ReinforcementInterval = 45.0;
+protected float m_ReinforcementTimer;
 
 void DAMVehicleDefenseMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, DAMVehicleRewardSettings vehicleSettings, float timeLimit)
 {
@@ -119,6 +184,7 @@ override protected void OnStart()
 {
 SpawnVehicle();
 SpawnInitialWave();
+m_ReinforcementTimer = m_ReinforcementInterval;
 }
 
 override protected void OnTick(float deltaTime)
@@ -127,6 +193,20 @@ if (!m_TargetVehicle)
 {
 FailMission("Vehicle destroyed");
 return;
+}
+
+if (IsVehicleDestroyed())
+{
+FailMission("Vehicle destroyed");
+return;
+}
+
+CleanupDeadAttackers();
+m_ReinforcementTimer -= deltaTime;
+if (m_ReinforcementTimer <= 0)
+{
+SpawnReinforcements();
+m_ReinforcementTimer = m_ReinforcementInterval;
 }
 
 if (m_ActiveAttackers.Count() == 0)
@@ -173,6 +253,40 @@ protected void SpawnAttacker(vector position)
 {
 Print(string.Format("[DAM] Spawning attacker for vehicle mission at %1", position.ToString()));
 // Hook up to existing AI presets and send them towards the vehicle target.
+m_ActiveAttackers.Insert(GetGame().CreateObject("eAIBase", position, true, false, true));
+}
+
+protected bool IsVehicleDestroyed()
+{
+Transport transport;
+if (Class.CastTo(transport, m_TargetVehicle))
+{
+return transport.IsDestroyed();
+}
+
+return true;
+}
+
+protected void CleanupDeadAttackers()
+{
+for (int i = m_ActiveAttackers.Count() - 1; i >= 0; i--)
+{
+EntityAI attacker;
+if (!Class.CastTo(attacker, m_ActiveAttackers[i]) || !attacker.IsAlive())
+{
+m_ActiveAttackers.Remove(i);
+}
+}
+}
+
+protected void SpawnReinforcements()
+{
+int waveSize = Math.Max(1, m_Tier.EnemyCount / 3);
+for (int i = 0; i < waveSize; i++)
+{
+vector spawnPos = FindRandomizedPosition(m_Location, m_AttackRadius);
+SpawnAttacker(spawnPos);
+}
 }
 
 protected void DeleteVehicle()
@@ -242,7 +356,8 @@ protected bool IsFactionDefeated(ref array<Object> factionArray)
 for (int i = factionArray.Count() - 1; i >= 0; i--)
 {
 Object ai = factionArray[i];
-if (ai)
+EntityAI entity;
+if (Class.CastTo(entity, ai) && entity.IsAlive())
 {
 return false;
 }

@@ -7,6 +7,7 @@ protected vector m_Location;
 protected bool m_IsActive;
 protected float m_TimeLimit;
 protected float m_Elapsed;
+protected float m_CleanupDelay = 60.0;
 
 void DAMMissionBase(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, float timeLimit = 1800)
 {
@@ -41,6 +42,7 @@ return;
 
 m_Elapsed += deltaTime;
 OnTick(deltaTime);
+OnThink();
 
 if (m_TimeLimit > 0 && m_Elapsed >= m_TimeLimit)
 {
@@ -138,11 +140,25 @@ protected void OnTick(float deltaTime)
 {
 }
 
+protected void OnThink()
+{
+}
+
 protected void OnComplete()
 {
 }
 
 protected void OnFail(string reason)
 {
+}
+
+protected void QueueCleanup(Object obj, int delayMs = 60000)
+{
+if (!obj)
+{
+return;
+}
+
+GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(GetGame().ObjectDelete, delayMs, false, obj);
 }
 }
