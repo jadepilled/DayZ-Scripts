@@ -27,20 +27,19 @@ m_Config.SetEventWeight("TerritoryWar", 0.75);
 DAMMissionBase CreateEscortMission(array<vector> path, DAMTierSettings tier, DAMMissionMessages messages)
 {
 vector origin = path.Count() > 0 ? path[0] : ChooseRandomLocation(messages.MarkerRadius);
-ref DAMEscortMission mission = new DAMEscortMission("escort" + Math.RandomInt(0, int.Max), tier, origin, messages, path);
+ref DAMEscortMission mission = new DAMEscortMission("escort" + Math.RandomInt(0, int.MAX), tier, origin, messages, path);
 return mission;
 }
 
 DAMMissionBase CreateVehicleDefenseMission(vector origin, DAMTierSettings tier, DAMMissionMessages messages, DAMVehicleRewardSettings vehicleSettings, float timeLimit)
 {
-ref DAMVehicleDefenseMission mission = new DAMVehicleDefenseMission("vehicle_defense" + Math.RandomInt(0, int.Max), tier, origin, messages, vehicleSettings, timeLimit);
+ref DAMVehicleDefenseMission mission = new DAMVehicleDefenseMission("vehicle_defense" + Math.RandomInt(0, int.MAX), tier, origin, messages, vehicleSettings, timeLimit);
 return mission;
 }
 
 DAMMissionBase CreateTerritoryWarMission(vector origin, DAMTierSettings tier, DAMMissionMessages messages)
 {
-ref DAMTerritoryWarMission mission = new DAMTerritoryWarMission();
-mission.DAMMissionBase("territory_war" + Math.RandomInt(0, int.Max), tier, origin, messages, 0);
+ref DAMTerritoryWarMission mission = new DAMTerritoryWarMission("territory_war" + Math.RandomInt(0, int.MAX), tier, origin, messages);
 return mission;
 }
 

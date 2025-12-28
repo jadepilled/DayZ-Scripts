@@ -45,7 +45,7 @@ return;
 HandleWaypointProgress(deltaTime);
 }
 
-override protected void OnThink()
+override protected void OnThink(float deltaTime)
 {
 if (!IsTargetAlive())
 {
@@ -58,7 +58,7 @@ if (m_CurrentWaypointIndex < 0 || m_CurrentWaypointIndex >= m_PathPoints.Count()
 return;
 }
 
-m_PlayerCheckTimer -= 1.0;
+m_PlayerCheckTimer -= deltaTime;
 if (m_PlayerCheckTimer > 0)
 {
 return;
@@ -92,7 +92,7 @@ if (m_PathPoints.Count() > 0)
 spawnPos = m_PathPoints[0];
 }
 
-m_EscortTarget = GetGame().CreateObject("SurvivorM_Mirek", spawnPos, true, false, true);
+m_EscortTarget = SpawnAIAt(spawnPos, null, "eAI_SurvivorM_Mirek");
 
 if (m_EscortTarget)
 {
@@ -161,7 +161,7 @@ return false;
 protected void SpawnPresetAI(vector position)
 {
 Print(string.Format("[DAM] Spawning escort ambush AI at %1", position.ToString()));
-// Integrate with existing AI preset spawning here.
+SpawnAIAt(position, new eAIFactionLunatics());
 }
 }
 
@@ -252,8 +252,11 @@ SpawnAttacker(spawnPos);
 protected void SpawnAttacker(vector position)
 {
 Print(string.Format("[DAM] Spawning attacker for vehicle mission at %1", position.ToString()));
-// Hook up to existing AI presets and send them towards the vehicle target.
-m_ActiveAttackers.Insert(GetGame().CreateObject("eAIBase", position, true, false, true));
+Object attacker = SpawnAIAt(position, new eAIFactionLunatics());
+if (attacker)
+{
+m_ActiveAttackers.Insert(attacker);
+}
 }
 
 protected bool IsVehicleDestroyed()
@@ -302,6 +305,11 @@ protected ref array<Object> m_FactionB = new array<Object>();
 protected float m_ReinforcementDelay = 120.0;
 protected float m_ReinforcementTimer;
 
+void DAMTerritoryWarMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages)
+{
+super.DAMMissionBase(missionId, tier, origin, messages, 0);
+}
+
 override protected void OnStart()
 {
 SpawnFaction(m_FactionA, "FactionA");
@@ -347,8 +355,8 @@ factionArray.Insert(ai);
 protected Object SpawnFactionAI(vector position, string factionName)
 {
 Print(string.Format("[DAM] Spawning %1 soldier at %2", factionName, position.ToString()));
-// Connect to existing faction presets to ensure opposing loadouts.
-return null;
+eAIFaction faction = factionName == "FactionA" ? new eAIFactionLunatics() : new eAIFactionInfected();
+return SpawnAIAt(position, faction);
 }
 
 protected bool IsFactionDefeated(ref array<Object> factionArray)

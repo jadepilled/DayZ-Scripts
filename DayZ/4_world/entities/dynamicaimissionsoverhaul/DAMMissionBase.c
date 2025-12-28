@@ -42,7 +42,18 @@ return;
 
 m_Elapsed += deltaTime;
 OnTick(deltaTime);
-OnThink();
+
+if (!m_IsActive)
+{
+return;
+}
+
+OnThink(deltaTime);
+
+if (!m_IsActive)
+{
+return;
+}
 
 if (m_TimeLimit > 0 && m_Elapsed >= m_TimeLimit)
 {
@@ -140,7 +151,7 @@ protected void OnTick(float deltaTime)
 {
 }
 
-protected void OnThink()
+protected void OnThink(float deltaTime)
 {
 }
 
@@ -160,5 +171,17 @@ return;
 }
 
 GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(GetGame().ObjectDelete, delayMs, false, obj);
+}
+
+protected eAIBase SpawnAIAt(vector position, eAIFaction faction = null, string className = "eAI_SurvivorM_Mirek")
+{
+Object obj = GetGame().CreateObject(className, position, true, false, true);
+eAIBase ai;
+if (Class.CastTo(ai, obj))
+{
+eAIGroup.GetGroupByLeader(ai, true, faction);
+}
+
+return ai;
 }
 }
