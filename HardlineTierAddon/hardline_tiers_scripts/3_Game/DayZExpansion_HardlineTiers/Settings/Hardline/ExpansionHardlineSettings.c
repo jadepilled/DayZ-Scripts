@@ -22,6 +22,9 @@ class ExpansionHardlineTierSettings
         DefaultItemTier = ExpansionHardlineItemTier.Basic;
         ItemTierParentSearch = true;
 
+        if (!ItemTier)
+            ItemTier = new map<string, ExpansionHardlineItemTier>;
+
         ItemTier.Clear();
         ItemTier.Insert("itembase", ExpansionHardlineItemTier.Basic);
         ItemTier.Insert("rifle_base", ExpansionHardlineItemTier.Advanced);
@@ -167,6 +170,9 @@ modded class ExpansionHardlineSettings
             return false;
         }
 
+        if (!ItemTier)
+            ItemTier = new map<string, ExpansionHardlineItemTier>;
+
         ItemTier.Clear();
         for (int i = 0; i < itemTierCount; i++)
         {
@@ -199,6 +205,9 @@ modded class ExpansionHardlineSettings
     {
         super.OnSend(ctx);
 
+        if (!ItemTier)
+            ItemTier = new map<string, ExpansionHardlineItemTier>;
+
         ctx.Write(DefaultItemTier);
         ctx.Write(ItemTierParentSearch);
 
@@ -214,12 +223,15 @@ modded class ExpansionHardlineSettings
     {
         bool hardlineSettingsExist = super.OnLoad();
 
-        LoadTierSettings();
-
-        if (m_Version < VERSION)
+        if (IsMissionHost())
         {
-            m_Version = VERSION;
-            Save();
+            LoadTierSettings();
+
+            if (m_Version < VERSION)
+            {
+                m_Version = VERSION;
+                Save();
+            }
         }
 
         return hardlineSettingsExist;
@@ -229,7 +241,8 @@ modded class ExpansionHardlineSettings
     {
         bool result = super.OnSave();
 
-        SaveTierSettings();
+        if (IsMissionHost())
+            SaveTierSettings();
 
         return result;
     }
@@ -298,7 +311,13 @@ modded class ExpansionHardlineSettings
 
         DefaultItemTier = s.DefaultItemTier;
         ItemTierParentSearch = s.ItemTierParentSearch;
-        ItemTier = s.ItemTier;
+        if (!ItemTier)
+            ItemTier = new map<string, ExpansionHardlineItemTier>;
+
+        ItemTier.Clear();
+
+        if (s.ItemTier)
+            ItemTier.Copy(s.ItemTier);
     }
 
     ExpansionHardlineItemTier GetItemTierByType(string type)
@@ -324,6 +343,10 @@ modded class ExpansionHardlineSettings
     void AddItemTier(string type, ExpansionHardlineItemTier tier)
     {
         type.ToLower();
+
+        if (!ItemTier)
+            ItemTier = new map<string, ExpansionHardlineItemTier>;
+
         ItemTier.Insert(type, tier);
     }
 
@@ -335,6 +358,9 @@ modded class ExpansionHardlineSettings
         if (FileExist(EXPANSION_HARDLINE_TIER_SETTINGS))
         {
             ExpansionJsonFileParser<ExpansionHardlineTierSettings>.Load(EXPANSION_HARDLINE_TIER_SETTINGS, tierSettings);
+
+            if (!tierSettings.ItemTier)
+                tierSettings.ItemTier = new map<string, ExpansionHardlineItemTier>;
 
             if (tierSettings.m_Version < ExpansionHardlineTierSettings.VERSION)
             {
@@ -373,14 +399,23 @@ modded class ExpansionHardlineSettings
 
     protected void SaveTierSettings(ExpansionHardlineTierSettings tierSettings = null)
     {
+        if (!IsMissionHost())
+            return;
+
+        if (!FileExist(EXPANSION_MISSION_SETTINGS_FOLDER))
+            ExpansionStatic.MakeDirectoryRecursive(EXPANSION_MISSION_SETTINGS_FOLDER);
+
         if (!tierSettings)
         {
             tierSettings = new ExpansionHardlineTierSettings();
             tierSettings.DefaultItemTier = DefaultItemTier;
             tierSettings.ItemTierParentSearch = ItemTierParentSearch;
 
-            tierSettings.ItemTier.Clear();
-            tierSettings.ItemTier.Copy(ItemTier);
+            if (ItemTier)
+            {
+                tierSettings.ItemTier.Clear();
+                tierSettings.ItemTier.Copy(ItemTier);
+            }
         }
 
         JsonFileLoader<ExpansionHardlineTierSettings>.JsonSaveFile(EXPANSION_HARDLINE_TIER_SETTINGS, tierSettings);
