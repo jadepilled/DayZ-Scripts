@@ -23,16 +23,18 @@ class ExpansionHardlineSettingsV8
  **/
 class ExpansionHardlineSettings: ExpansionSettingBase
 {
-	static const int VERSION = 11;
+static const int VERSION = 12;
 
 	int PoorItemRequirement;
 	int CommonItemRequirement;
 	int UncommonItemRequirement;
-	int RareItemRequirement;
-	int EpicItemRequirement;
-	int LegendaryItemRequirement;
-	int MythicItemRequirement;
-	int ExoticItemRequirement;
+int RareItemRequirement;
+int EpicItemRequirement;
+int LegendaryItemRequirement;
+int MythicItemRequirement;
+int ExoticItemRequirement;
+int DivineItemRequirement;
+int RelicItemRequirement;
 
 	bool ShowHardlineHUD;
 	bool UseReputation;
@@ -106,11 +108,23 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 			return false;
 		}
 		
-		if (!ctx.Read(ExoticItemRequirement))
-		{
-			Error(ToString() + "::OnRecieve ExoticItemRequirement");
-			return false;
-		}
+if (!ctx.Read(ExoticItemRequirement))
+{
+Error(ToString() + "::OnRecieve ExoticItemRequirement");
+return false;
+}
+
+if (!ctx.Read(DivineItemRequirement))
+{
+Error(ToString() + "::OnRecieve DivineItemRequirement");
+return false;
+}
+
+if (!ctx.Read(RelicItemRequirement))
+{
+Error(ToString() + "::OnRecieve RelicItemRequirement");
+return false;
+}
 
 		if (!ctx.Read(ShowHardlineHUD))
 		{
@@ -184,11 +198,13 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		ctx.Write(PoorItemRequirement);
 		ctx.Write(CommonItemRequirement);
 		ctx.Write(UncommonItemRequirement);
-		ctx.Write(RareItemRequirement);
-		ctx.Write(EpicItemRequirement);
-		ctx.Write(LegendaryItemRequirement);
-		ctx.Write(MythicItemRequirement);
-		ctx.Write(ExoticItemRequirement);
+ctx.Write(RareItemRequirement);
+ctx.Write(EpicItemRequirement);
+ctx.Write(LegendaryItemRequirement);
+ctx.Write(MythicItemRequirement);
+ctx.Write(ExoticItemRequirement);
+ctx.Write(DivineItemRequirement);
+ctx.Write(RelicItemRequirement);
 		
 		ctx.Write(ShowHardlineHUD);
 		ctx.Write(UseReputation);
@@ -229,11 +245,13 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		PoorItemRequirement = s.PoorItemRequirement;
 		CommonItemRequirement = s.CommonItemRequirement;
 		UncommonItemRequirement = s.UncommonItemRequirement;
-		RareItemRequirement = s.RareItemRequirement;
-		EpicItemRequirement = s.EpicItemRequirement;
-		LegendaryItemRequirement = s.LegendaryItemRequirement;
-		MythicItemRequirement = s.MythicItemRequirement;
-		ExoticItemRequirement = s.ExoticItemRequirement;
+RareItemRequirement = s.RareItemRequirement;
+EpicItemRequirement = s.EpicItemRequirement;
+LegendaryItemRequirement = s.LegendaryItemRequirement;
+MythicItemRequirement = s.MythicItemRequirement;
+ExoticItemRequirement = s.ExoticItemRequirement;
+DivineItemRequirement = s.DivineItemRequirement;
+RelicItemRequirement = s.RelicItemRequirement;
 
 		ShowHardlineHUD = s.ShowHardlineHUD;
 		UseReputation = s.UseReputation;
@@ -373,7 +391,9 @@ class ExpansionHardlineSettings: ExpansionSettingBase
 		EpicItemRequirement = 3000;
 		LegendaryItemRequirement = 4000;
 		MythicItemRequirement = 5000;
-		ExoticItemRequirement = 10000;
+ExoticItemRequirement = 10000;
+DivineItemRequirement = 15000;
+RelicItemRequirement = 20000;
 
 		ShowHardlineHUD = true;
 		UseReputation = true;
