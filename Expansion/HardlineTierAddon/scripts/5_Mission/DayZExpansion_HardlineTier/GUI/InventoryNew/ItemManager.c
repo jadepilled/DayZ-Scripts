@@ -17,7 +17,7 @@ modded class ItemManager
             GridSpacerWidget container = GridSpacerWidget.Cast(m_TooltipWidget.FindAnyWidget("GridSpacerWidget0"));
             if (container)
             {
-                g_Game.GetWorkspace().CreateWidgets("Expansion/HardlineTierAddon/gui/layouts/expansion_tooltip_entry_tier.layout", container);
+                g_Game.GetWorkspace().CreateWidgets("HardlineTierAddon/gui/layouts/expansion_tooltip_entry_tier.layout", container);
                 m_Expansion_HasTierLayout = true;
             }
         }

@@ -21,17 +21,17 @@ class CfgMods
         {
             class gameScriptModule
             {
-                files[] = {"Expansion/HardlineTierAddon/scripts/3_Game"};
+                files[] = {"HardlineTierAddon/scripts/3_Game"};
             };
 
             class worldScriptModule
             {
-                files[] = {"Expansion/HardlineTierAddon/scripts/4_World"};
+                files[] = {"HardlineTierAddon/scripts/4_World"};
             };
 
             class missionScriptModule
             {
-                files[] = {"Expansion/HardlineTierAddon/scripts/5_Mission"};
+                files[] = {"HardlineTierAddon/scripts/5_Mission"};
             };
         };
     };

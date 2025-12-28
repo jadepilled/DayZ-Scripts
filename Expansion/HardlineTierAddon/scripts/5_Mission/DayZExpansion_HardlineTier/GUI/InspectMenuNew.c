@@ -17,7 +17,7 @@ modded class InspectMenuNew
         {
             Widget rarityElement = root_widget.FindAnyWidget("ItemRarityWidgetBackground");
             if (rarityElement)
-                tierElement = ImageWidget.Cast(g_Game.GetWorkspace().CreateWidgets("Expansion/HardlineTierAddon/gui/layouts/expansion_tooltip_entry_tier.layout", rarityElement.GetParent()));
+                tierElement = ImageWidget.Cast(g_Game.GetWorkspace().CreateWidgets("HardlineTierAddon/gui/layouts/expansion_tooltip_entry_tier.layout", rarityElement.GetParent()));
         }
 
         if (!tierElement)
