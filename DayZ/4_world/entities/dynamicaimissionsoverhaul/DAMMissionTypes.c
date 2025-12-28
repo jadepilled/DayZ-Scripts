@@ -1,0 +1,255 @@
+class DAMEscortMission : DAMMissionBase
+{
+protected ref array<vector> m_PathPoints = new array<vector>();
+protected int m_CurrentWaypointIndex = -1;
+protected Object m_EscortTarget;
+protected float m_AdvanceRadius = 40.0;
+protected float m_SpawnRadius = 125.0;
+
+void DAMEscortMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, array<vector> path)
+{
+super.DAMMissionBase(missionId, tier, origin, messages, 0);
+
+if (path)
+{
+m_PathPoints.Copy(path);
+}
+}
+
+void ActivateFromPlayer(PlayerBase player)
+{
+if (!IsActive())
+{
+m_Location = player.GetPosition();
+StartMission();
+}
+}
+
+override protected void OnStart()
+{
+SpawnEscortTarget();
+m_CurrentWaypointIndex = 0;
+Print(string.Format("[DAM] Escort mission %1 started with %2 path points", m_MissionId, m_PathPoints.Count()));
+}
+
+override protected void OnTick(float deltaTime)
+{
+if (!m_EscortTarget)
+{
+FailMission("Escort target lost");
+return;
+}
+
+HandleWaypointProgress();
+}
+
+override protected void OnComplete()
+{
+Print(string.Format("[DAM] Escort mission %1 reached final waypoint", m_MissionId));
+}
+
+override protected void OnFail(string reason)
+{
+Print(string.Format("[DAM] Escort mission %1 failed: %2", m_MissionId, reason));
+}
+
+protected void SpawnEscortTarget()
+{
+vector spawnPos = m_Location;
+if (m_PathPoints.Count() > 0)
+{
+spawnPos = m_PathPoints[0];
+}
+
+m_EscortTarget = GetGame().CreateObject("SurvivorM_Mirek", spawnPos, true, false, true);
+
+if (m_EscortTarget)
+{
+Print(string.Format("[DAM] Spawned escort target for %1 at %2", m_MissionId, spawnPos.ToString()));
+}
+}
+
+protected void HandleWaypointProgress()
+{
+if (m_CurrentWaypointIndex < 0 || m_CurrentWaypointIndex >= m_PathPoints.Count())
+{
+CompleteMission();
+return;
+}
+
+vector waypoint = m_PathPoints[m_CurrentWaypointIndex];
+if (vector.Distance(m_EscortTarget.GetPosition(), waypoint) <= m_AdvanceRadius)
+{
+SpawnEscortEncounter(waypoint);
+m_CurrentWaypointIndex++;
+}
+}
+
+protected void SpawnEscortEncounter(vector waypoint)
+{
+int aiCount = m_Tier.EnemyCount;
+for (int i = 0; i < aiCount; i++)
+{
+vector spawnPos = FindRandomizedPosition(waypoint, m_SpawnRadius);
+SpawnPresetAI(spawnPos);
+}
+}
+
+protected void SpawnPresetAI(vector position)
+{
+Print(string.Format("[DAM] Spawning escort ambush AI at %1", position.ToString()));
+// Integrate with existing AI preset spawning here.
+}
+}
+
+class DAMVehicleDefenseMission : DAMMissionBase
+{
+protected Object m_TargetVehicle;
+protected float m_AttackRadius = 1000.0;
+protected ref array<Object> m_ActiveAttackers = new array<Object>();
+protected ref DAMVehicleRewardSettings m_VehicleSettings;
+
+void DAMVehicleDefenseMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, DAMVehicleRewardSettings vehicleSettings, float timeLimit)
+{
+super.DAMMissionBase(missionId, tier, origin, messages, timeLimit);
+m_VehicleSettings = vehicleSettings;
+}
+
+override protected void OnStart()
+{
+SpawnVehicle();
+SpawnInitialWave();
+}
+
+override protected void OnTick(float deltaTime)
+{
+if (!m_TargetVehicle)
+{
+FailMission("Vehicle destroyed");
+return;
+}
+
+if (m_ActiveAttackers.Count() == 0)
+{
+CompleteMission();
+}
+}
+
+override protected void OnComplete()
+{
+if (!m_VehicleSettings.IncludeVehicleAsReward && m_TargetVehicle)
+{
+GetGame().ObjectDelete(m_TargetVehicle);
+}
+}
+
+override protected void OnFail(string reason)
+{
+if (m_TargetVehicle && !m_VehicleSettings.IncludeVehicleAsReward)
+{
+GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLater(DeleteVehicle, (int)(m_VehicleSettings.DespawnDelayOnFailure * 1000), false);
+}
+}
+
+protected void SpawnVehicle()
+{
+m_TargetVehicle = GetGame().CreateObject("OffroadHatchback", m_Location, true, false, true);
+if (m_TargetVehicle)
+{
+Print(string.Format("[DAM] Spawned defense vehicle for %1 at %2", m_MissionId, m_Location.ToString()));
+}
+}
+
+protected void SpawnInitialWave()
+{
+for (int i = 0; i < m_Tier.EnemyCount; i++)
+{
+vector spawnPos = FindRandomizedPosition(m_Location, m_AttackRadius);
+SpawnAttacker(spawnPos);
+}
+}
+
+protected void SpawnAttacker(vector position)
+{
+Print(string.Format("[DAM] Spawning attacker for vehicle mission at %1", position.ToString()));
+// Hook up to existing AI presets and send them towards the vehicle target.
+}
+
+protected void DeleteVehicle()
+{
+GetGame().ObjectDelete(m_TargetVehicle);
+}
+}
+
+class DAMTerritoryWarMission : DAMMissionBase
+{
+protected ref array<Object> m_FactionA = new array<Object>();
+protected ref array<Object> m_FactionB = new array<Object>();
+protected float m_ReinforcementDelay = 120.0;
+protected float m_ReinforcementTimer;
+
+override protected void OnStart()
+{
+SpawnFaction(m_FactionA, "FactionA");
+SpawnFaction(m_FactionB, "FactionB");
+m_ReinforcementTimer = m_ReinforcementDelay;
+}
+
+override protected void OnTick(float deltaTime)
+{
+if (IsFactionDefeated(m_FactionA) && IsFactionDefeated(m_FactionB))
+{
+CompleteMission();
+return;
+}
+
+m_ReinforcementTimer -= deltaTime;
+if (m_ReinforcementTimer <= 0)
+{
+SpawnFaction(m_FactionA, "FactionA");
+SpawnFaction(m_FactionB, "FactionB");
+m_ReinforcementTimer = m_ReinforcementDelay;
+}
+}
+
+override protected void OnComplete()
+{
+Print(string.Format("[DAM] Territory War mission %1 finished after all AI were eliminated", m_MissionId));
+}
+
+protected void SpawnFaction(ref array<Object> factionArray, string factionName)
+{
+for (int i = 0; i < m_Tier.EnemyCount; i++)
+{
+vector position = FindRandomizedPosition(m_Location, m_Messages.MarkerRadius);
+Object ai = SpawnFactionAI(position, factionName);
+if (ai)
+{
+factionArray.Insert(ai);
+}
+}
+}
+
+protected Object SpawnFactionAI(vector position, string factionName)
+{
+Print(string.Format("[DAM] Spawning %1 soldier at %2", factionName, position.ToString()));
+// Connect to existing faction presets to ensure opposing loadouts.
+return null;
+}
+
+protected bool IsFactionDefeated(ref array<Object> factionArray)
+{
+for (int i = factionArray.Count() - 1; i >= 0; i--)
+{
+Object ai = factionArray[i];
+if (ai)
+{
+return false;
+}
+
+factionArray.Remove(i);
+}
+
+return true;
+}
+}
