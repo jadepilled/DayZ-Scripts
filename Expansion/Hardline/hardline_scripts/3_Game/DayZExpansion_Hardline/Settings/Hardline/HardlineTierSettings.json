@@ -1,9 +1,0 @@
-{
-    "DefaultItemTier": 0,
-    "ItemTierParentSearch": false,
-    "ItemTier": {
-        "itembase": 0,
-        "akm": 2,
-        "m4a1": 3
-    }
-}
