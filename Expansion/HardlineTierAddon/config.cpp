@@ -14,7 +14,7 @@ class CfgMods
     {
         dir = "Expansion_Hardline_TierAddon";
         name = "Expansion Hardline Tier Addon";
-        author = "ServerAdmin";
+        author = "psyopgirl";
         dependencies[] = {"Game", "World", "Mission"};
 
         class defs
