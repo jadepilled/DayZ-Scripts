@@ -3,13 +3,14 @@ class DAMMissionBase
 protected string m_MissionId;
 protected ref DAMMissionMessages m_Messages;
 protected ref DAMTierSettings m_Tier;
+protected ref DAMOverhaulConfig m_Config;
 protected vector m_Location;
 protected bool m_IsActive;
 protected float m_TimeLimit;
 protected float m_Elapsed;
 protected float m_CleanupDelay = 60.0;
 
-void DAMMissionBase(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, float timeLimit = 1800)
+void DAMMissionBase(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, float timeLimit = 1800, DAMOverhaulConfig config = null)
 {
 m_MissionId = missionId;
 m_Tier = tier;
@@ -17,6 +18,7 @@ m_Location = origin;
 m_Messages = messages;
 m_TimeLimit = timeLimit;
 m_Elapsed = 0;
+m_Config = config;
 }
 
 void StartMission()
@@ -70,6 +72,7 @@ return;
 
 m_IsActive = false;
 OnComplete();
+SpawnLootRewards();
 NotifyPlayers(m_Messages.SuccessMessage);
 CleanupMarker();
 }
@@ -114,7 +117,13 @@ PlayerBase player;
 Class.CastTo(player, players.Get(i));
 if (player)
 {
-player.MessageStatus(message);
+string composedMessage = message;
+if (m_Messages && m_Messages.Title != "")
+{
+composedMessage = m_Messages.Title + " - " + message;
+}
+
+player.MessageStatus(composedMessage);
 }
 }
 }
@@ -183,5 +192,37 @@ eAIGroup.GetGroupByLeader(ai, true, faction);
 }
 
 return ai;
+}
+
+protected void SpawnLootRewards()
+{
+if (!m_Config || !m_Tier)
+{
+return;
+}
+
+array<string> lootItems;
+if (!m_Config.TryGetLootForTier(m_Tier.LootTier, lootItems) || !lootItems || lootItems.Count() == 0)
+{
+Print(string.Format("[DAM] No loot configured for tier %1", m_Tier.LootTier));
+return;
+}
+
+int rewardCount = Math.Clamp(m_Tier.LootTier, 1, 6);
+for (int i = 0; i < rewardCount; i++)
+{
+int index = Math.RandomIntInclusive(0, lootItems.Count() - 1);
+string rewardClass = lootItems[index];
+vector spawnPos = FindRandomizedPosition(m_Location, 2.0);
+
+Object rewardObj = GetGame().CreateObject(rewardClass, spawnPos, false, true, true);
+ItemBase rewardItem;
+if (Class.CastTo(rewardItem, rewardObj))
+{
+rewardItem.SetQuantityMax();
+}
+
+Print(string.Format("[DAM] Spawned %1 loot reward %2 at %3", m_MissionId, rewardClass, spawnPos.ToString()));
+}
 }
 }

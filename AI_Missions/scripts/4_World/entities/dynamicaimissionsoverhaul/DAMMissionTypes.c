@@ -8,9 +8,9 @@ protected float m_SpawnRadius = 125.0;
 protected float m_PlayerCheckInterval = 2.0;
 protected float m_PlayerCheckTimer;
 
-void DAMEscortMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, array<vector> path)
+void DAMEscortMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, array<vector> path, DAMOverhaulConfig config = null)
 {
-super.DAMMissionBase(missionId, tier, origin, messages, 0);
+super.DAMMissionBase(missionId, tier, origin, messages, 0, config);
 
 if (path)
 {
@@ -174,9 +174,9 @@ protected ref DAMVehicleRewardSettings m_VehicleSettings;
 protected float m_ReinforcementInterval = 45.0;
 protected float m_ReinforcementTimer;
 
-void DAMVehicleDefenseMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, DAMVehicleRewardSettings vehicleSettings, float timeLimit)
+void DAMVehicleDefenseMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, DAMVehicleRewardSettings vehicleSettings, float timeLimit, DAMOverhaulConfig config = null)
 {
-super.DAMMissionBase(missionId, tier, origin, messages, timeLimit);
+super.DAMMissionBase(missionId, tier, origin, messages, timeLimit, config);
 m_VehicleSettings = vehicleSettings;
 }
 
@@ -304,10 +304,14 @@ protected ref array<Object> m_FactionA = new array<Object>();
 protected ref array<Object> m_FactionB = new array<Object>();
 protected float m_ReinforcementDelay = 120.0;
 protected float m_ReinforcementTimer;
+protected string m_FactionAClassName;
+protected string m_FactionBClassName;
 
-void DAMTerritoryWarMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages)
+void DAMTerritoryWarMission(string missionId, DAMTierSettings tier, vector origin, DAMMissionMessages messages, DAMOverhaulConfig config = null, string factionAClass = "", string factionBClass = "")
 {
-super.DAMMissionBase(missionId, tier, origin, messages, 0);
+super.DAMMissionBase(missionId, tier, origin, messages, 0, config);
+m_FactionAClassName = factionAClass;
+m_FactionBClassName = factionBClass;
 }
 
 override protected void OnStart()
@@ -355,8 +359,44 @@ factionArray.Insert(ai);
 protected Object SpawnFactionAI(vector position, string factionName)
 {
 Print(string.Format("[DAM] Spawning %1 soldier at %2", factionName, position.ToString()));
-eAIFaction faction = factionName == "FactionA" ? new eAIFactionLunatics() : new eAIFactionInfected();
+eAIFaction faction = CreateFaction(factionName);
 return SpawnAIAt(position, faction);
+}
+
+protected eAIFaction CreateFaction(string factionIdentifier)
+{
+if (factionIdentifier == "FactionA" && m_FactionAClassName != "")
+{
+return InstantiateFactionByName(m_FactionAClassName);
+}
+
+if (factionIdentifier == "FactionB" && m_FactionBClassName != "")
+{
+return InstantiateFactionByName(m_FactionBClassName);
+}
+
+if (factionIdentifier == "FactionA")
+{
+return new eAIFactionLunatics();
+}
+
+return new eAIFactionInfected();
+}
+
+protected eAIFaction InstantiateFactionByName(string className)
+{
+switch (className)
+{
+case "eAIFactionLunatics":
+return new eAIFactionLunatics();
+case "eAIFactionInfected":
+return new eAIFactionInfected();
+case "eAIFactionBandit":
+return new eAIFactionBandit();
+default:
+Print(string.Format("[DAM] Unknown faction class %1, defaulting to Lunatics", className));
+return new eAIFactionLunatics();
+}
 }
 
 protected bool IsFactionDefeated(ref array<Object> factionArray)
