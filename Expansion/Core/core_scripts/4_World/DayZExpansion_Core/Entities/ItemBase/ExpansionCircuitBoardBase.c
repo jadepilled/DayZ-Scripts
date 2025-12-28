@@ -12,10 +12,10 @@
 
 class ExpansionCircuitBoardBase: ItemBase
 {
-	int Expansion_GetTier()
-	{
-		return -1;
-	}
+override int Expansion_GetTier()
+{
+return -1;
+}
 };
 
 class ExpansionCircuitBoard_MK1: ExpansionCircuitBoardBase

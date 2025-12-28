@@ -24,7 +24,7 @@ modded class ItemManager
 	{
 		ExpansionSettings.SI_Hardline.Remove(Expansion_OnSettingsReceived);
 	}
-	
+
 	void Expansion_OnSettingsReceived()
 	{
 #ifdef EXTRACE
@@ -50,16 +50,17 @@ modded class ItemManager
 			}
 		}
 	}
-	
+
 	override void PrepareTooltip(EntityAI item, int x = 0, int y = 0)
 	{
 		super.PrepareTooltip(item, x, y);
-		
+
 		Expansion_InitHardlineRarityWidget();
 
 		if (m_Expansion_IsValidLayout)
 		{
 			InspectMenuNew.Expansion_UpdateItemInfoRarity(m_TooltipWidget, item);
+			InspectMenuNew.Expansion_UpdateItemInfoTier(m_TooltipWidget, item);
 		}
 	}
 };
