@@ -3,16 +3,24 @@
  */
 class MilkyWayDayController
 {
-    static void ForceSpaceVisibility()
+    protected static void CallWorldFunction(string func, Param params)
     {
         World world = g_Game.GetWorld();
         if (!world)
             return;
 
-        Param1<bool> visible = new Param1<bool>(true);
+        GetGame().GameScript.CallFunctionParams(world, func, null, params);
+    }
 
-        // Use runtime reflection instead of modding the World engine class.
-        GetGame().GameScript.CallFunctionParams(world, "SetMilkyWayVisibility", null, visible);
-        GetGame().GameScript.CallFunctionParams(world, "SetSpaceObjectVisibility", null, visible);
+    static void ForceSpaceVisibility()
+    {
+        // Keep the sky objects fully enabled and bright enough to overcome the daytime fade-out.
+        CallWorldFunction("SetMilkyWayVisibility", new Param1<bool>(true));
+        CallWorldFunction("SetSpaceObjectVisibility", new Param1<bool>(true));
+
+        CallWorldFunction("SetMilkyWayIntensity", new Param1<float>(1.0));
+        CallWorldFunction("SetSpaceObjectIntensity", new Param1<float>(1.0));
+        CallWorldFunction("SetSpaceObjectGlow", new Param1<float>(1.0));
+        CallWorldFunction("SetStarsIntensity", new Param1<float>(1.0));
     }
 }
