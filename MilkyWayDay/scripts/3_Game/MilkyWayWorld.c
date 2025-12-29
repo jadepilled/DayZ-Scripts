@@ -3,13 +3,13 @@
  */
 class MilkyWayDayController
 {
-    protected static void CallWorldFunction(string func, Param params)
+    protected static void CallWorldFunction(string funcName, Param params)
     {
         World world = g_Game.GetWorld();
         if (!world)
             return;
 
-        GetGame().GameScript.CallFunctionParams(world, func, null, params);
+        GetGame().GameScript.CallFunctionParams(world, funcName, null, params);
     }
 
     static void ForceSpaceVisibility()
