@@ -1,12 +1,3 @@
-modded class World
-{
-    // Native hooks that control whether the sky dome renders the milky way band.
-    proto native void SetMilkyWayVisibility(bool visible);
-
-    // Native hook that toggles the generic space object/skybox visibility.
-    proto native void SetSpaceObjectVisibility(bool visible);
-}
-
 /**
  * Helper used by the mission layer to repeatedly assert the desired sky settings.
  */
@@ -18,7 +9,10 @@ class MilkyWayDayController
         if (!world)
             return;
 
-        world.SetMilkyWayVisibility(true);
-        world.SetSpaceObjectVisibility(true);
+        Param1<bool> visible = new Param1<bool>(true);
+
+        // Use runtime reflection instead of modding the World engine class.
+        GetGame().GameScript.CallFunctionParams(world, "SetMilkyWayVisibility", null, visible);
+        GetGame().GameScript.CallFunctionParams(world, "SetSpaceObjectVisibility", null, visible);
     }
 }
