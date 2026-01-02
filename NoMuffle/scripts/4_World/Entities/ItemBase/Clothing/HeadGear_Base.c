@@ -1,4 +1,4 @@
-modded class Mask_Base : Clothing
+modded class HeadGear_Base : Clothing
 {
 	override void HandleVoiceEffect(bool enable, PlayerBase player)
 	{
