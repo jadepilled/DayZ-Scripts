@@ -589,10 +589,12 @@ class AIM_MissionsConfig
 	
 	ref array<ref AIM_MissionObjects> Static_Objects;
 	
-	void AIM_MissionsConfig(string mName, vector mPos, int mBotMinCount, int mBotMaxCount, int mLoadoutID, int mBotRange, float mBotAccuracy, float mBotDmgDone, float mBotDmgTaken, bool mBotDropLoot, bool mBotDropWeapon, bool mIsNBC = false, bool allowcrates = true, bool allowvehicles = true, bool allowhelis = true)
-	{
-		Name = mName;
-		Position = mPos;
+        int Loot_Tier;
+
+        void AIM_MissionsConfig(string mName, vector mPos, int mBotMinCount, int mBotMaxCount, int mLoadoutID, int mBotRange, float mBotAccuracy, float mBotDmgDone, float mBotDmgTaken, bool mBotDropLoot, bool mBotDropWeapon, bool mIsNBC = false, bool allowcrates = true, bool allowvehicles = true, bool allowhelis = true, int lootTier = 0)
+        {
+                Name = mName;
+                Position = mPos;
 		Bots_Count_Minimum = mBotMinCount;
 		Bots_Count_Maximum = mBotMaxCount;
 		// NEW 1.02
@@ -603,12 +605,13 @@ class AIM_MissionsConfig
 		Bots_Accuracy = mBotAccuracy;
 		Bots_Damage_Done_Multiplier = mBotDmgDone;
 		Bots_Damage_Taken_Multiplier = mBotDmgTaken;
-		Bots_Drop_Loot = mBotDropLoot;
-		Bots_Drop_Weapon = mBotDropWeapon;
-		Is_NBC_Mission = mIsNBC;
-		Allow_Crate_Reward = allowcrates;
-		Allow_Vehicle_Reward = allowvehicles;
-		Allow_Helicopter_Reward = allowhelis;
+                Bots_Drop_Loot = mBotDropLoot;
+                Bots_Drop_Weapon = mBotDropWeapon;
+                Is_NBC_Mission = mIsNBC;
+                Allow_Crate_Reward = allowcrates;
+                Allow_Vehicle_Reward = allowvehicles;
+                Allow_Helicopter_Reward = allowhelis;
+                Loot_Tier = lootTier;
 		
 		Static_Objects = new ref array<ref AIM_MissionObjects>();
 	}
@@ -625,12 +628,13 @@ class AIM_MissionsConfig
 		this.Bots_Accuracy = 0;
 		this.Bots_Damage_Done_Multiplier = 0;
 		this.Bots_Damage_Taken_Multiplier = 0;
-		this.Bots_Drop_Loot = false;
-		this.Bots_Drop_Weapon = false;
-		this.Is_NBC_Mission = false;
-		this.Allow_Crate_Reward = false;
-		this.Allow_Vehicle_Reward = false;
-		this.Allow_Helicopter_Reward = false;
+                this.Bots_Drop_Loot = false;
+                this.Bots_Drop_Weapon = false;
+                this.Is_NBC_Mission = false;
+                this.Allow_Crate_Reward = false;
+                this.Allow_Vehicle_Reward = false;
+                this.Allow_Helicopter_Reward = false;
+                this.Loot_Tier = 0;
 		
 		if(this.Static_Objects) this.Static_Objects.Clear();
 		this.Static_Objects = NULL;
@@ -716,10 +720,15 @@ class AIM_MissionsConfig
 		return Allow_Vehicle_Reward;
 	}
 	
-	bool AllowHelicopters()
-	{
-		return Allow_Helicopter_Reward;
-	}
+        bool AllowHelicopters()
+        {
+                return Allow_Helicopter_Reward;
+        }
+
+        int GetLootTier()
+        {
+                return Loot_Tier;
+        }
 }
 
 class AIM_MissionObjects
