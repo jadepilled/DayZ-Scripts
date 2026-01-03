@@ -1,0 +1,11 @@
+{
+    "m_Version": 1,
+    "DefaultItemTier": 1,
+    "ItemTierParentSearch": true,
+    "ItemTier": {
+        "itembase": 1,
+        "rifle_base": 3,
+        "akm": 4,
+        "expansion_l96": 5
+    }
+}
