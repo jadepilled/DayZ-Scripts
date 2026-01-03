@@ -13,14 +13,17 @@
 modded class ItemBase
 {
 	protected int m_Expansion_Rarity = ExpansionHardlineItemRarity.NONE;
+	protected int m_Expansion_Tier = -1;
 
 	void ItemBase()
 	{
 		RegisterNetSyncVariableInt("m_Expansion_Rarity", EnumTools.GetEnumValue(ExpansionHardlineItemRarity, 0), EnumTools.GetLastEnumValue(ExpansionHardlineItemRarity));
+		RegisterNetSyncVariableInt("m_Expansion_Tier", -1, 255);
 
 		if (g_Game.IsServer() && GetExpansionSettings().GetHardline().EnableItemRarity)
 		{
 			m_Expansion_Rarity = GetExpansionSettings().GetHardline().GetItemRarityByType(GetType());
+			m_Expansion_Tier = Expansion_GetTier();
 
 		#ifdef EXPANSIONMODHARDLINEDEBUG
 			EXTrace.Print(EXTrace.HARDLINE, this, "- Hardline item rarity: " + typename.EnumToString(ExpansionHardlineItemRarity, m_Expansion_Rarity));
@@ -31,6 +34,11 @@ modded class ItemBase
 	ExpansionHardlineItemRarity Expansion_GetRarity()
 	{
 		return m_Expansion_Rarity;
+	}
+
+	int Expansion_GetTier()
+	{
+		return m_Expansion_Tier;
 	}
 
 	void Expansion_SetRarity(ExpansionHardlineItemRarity rarity)

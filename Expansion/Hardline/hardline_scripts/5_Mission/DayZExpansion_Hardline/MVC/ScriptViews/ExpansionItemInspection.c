@@ -4,8 +4,12 @@ modded class ExpansionItemInspectionBase
 	{
 		super.UpdateItemStats();
 
-		if (GetExpansionSettings().GetHardline().EnableItemRarity)
+		ExpansionHardlineSettings hardlineSettings = GetExpansionSettings().GetHardline();
+		if (hardlineSettings.EnableItemRarity)
+		{
 			UpdateItemRarity();
+			UpdateItemTier(hardlineSettings);
+		}
 	}
 
 	void UpdateItemRarity()
@@ -24,7 +28,27 @@ modded class ExpansionItemInspectionBase
 		string text = "#" + "STR_EXPANSION_HARDLINE_" + rarityName;
 		int color;
 		ExpansionStatic.GetVariableIntByName(ExpansionHardlineItemRarityColor, rarityName, color);
-        ExpansionItemTooltipStatElement element = new ExpansionItemTooltipStatElement(text, color);
-        m_ItemInspectionController.ItemElements.Insert(element);
+		ExpansionItemTooltipStatElement element = new ExpansionItemTooltipStatElement(text, color);
+		m_ItemInspectionController.ItemElements.Insert(element);
+	}
+
+	void UpdateItemTier(ExpansionHardlineSettings settings)
+	{
+		ItemBase itemBase;
+		if (settings.EnableItemRarity && Class.CastTo(itemBase, m_Item))
+			UpdateItemTierEx(itemBase.Expansion_GetTier());
+	}
+
+	void UpdateItemTierEx(int tier)
+	{
+		if (tier < 0)
+			return;
+
+		string tierName = "Tier" + tier;
+		string text = "#" + "STR_EXPANSION_HARDLINE_TIER_" + tier;
+		int color;
+		ExpansionStatic.GetVariableIntByName(ExpansionHardlineItemTierColor, tierName, color);
+		ExpansionItemTooltipStatElement element = new ExpansionItemTooltipStatElement(text, color);
+		m_ItemInspectionController.ItemElements.Insert(element);
 	}
 };

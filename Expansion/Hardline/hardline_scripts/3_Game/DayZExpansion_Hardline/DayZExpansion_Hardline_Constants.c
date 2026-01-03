@@ -33,3 +33,14 @@ class ExpansionHardlineItemRarityColor
 	static const int Collectable = ARGB(255, 224, 86, 253);
 	static const int Ingredient = ARGB(255, 158, 158, 158);
 }
+
+class ExpansionHardlineItemTierColor
+{
+	static const int Tier0 = ARGB(255, 196, 196, 196);
+	static const int Tier1 = ARGB(255, 52, 152, 219);
+	static const int Tier2 = ARGB(255, 46, 204, 113);
+	static const int Tier3 = ARGB(255, 241, 196, 15);
+	static const int Tier4 = ARGB(255, 230, 126, 34);
+	static const int Tier5 = ARGB(255, 231, 76, 60);
+}
+
