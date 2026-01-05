@@ -38,7 +38,7 @@ class ItemTagDefinition
 
         return defaultColor;
     }
-}
+};
 
 class ItemTagsConfig
 {
@@ -115,9 +115,29 @@ class ItemTagsConfig
         if (!ctx.Read(param))
             return;
 
-        tagsByClass = param.param1.tagsByClass;
+        tagsByClass = new map<string, ref array<ref ItemTagDefinition>>();
 
-        if (!tagsByClass)
-            tagsByClass = new map<string, ref array<ref ItemTagDefinition>>();
+        if (!param.param1 || !param.param1.tagsByClass)
+            return;
+
+        MapIterator iterator = param.param1.tagsByClass.Begin();
+        while (iterator != param.param1.tagsByClass.End())
+        {
+            string className = param.param1.tagsByClass.GetIteratorKey(iterator);
+            ref array<ref ItemTagDefinition> definitions = param.param1.tagsByClass.GetIteratorElement(iterator);
+
+            if (definitions)
+            {
+                ref array<ref ItemTagDefinition> copy = new array<ref ItemTagDefinition>();
+                foreach (ItemTagDefinition definition : definitions)
+                {
+                    copy.Insert(new ItemTagDefinition(definition.label, definition.textColor, definition.backgroundColor));
+                }
+
+                tagsByClass.Insert(className, copy);
+            }
+
+            iterator = param.param1.tagsByClass.Next(iterator);
+        }
     }
-}
+};
