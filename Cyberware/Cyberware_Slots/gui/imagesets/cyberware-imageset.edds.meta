@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{03C19429A4AF5287}EDDS/cyberware-imageset.edds"
+ Author "desktop-eihqemt"
+ ChangeDate 54243979
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "cyberware-imageset.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

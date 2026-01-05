@@ -1,0 +1,74 @@
+ImageSetClass {
+ Name "NewImageSet0"
+ RefSize 1780 178
+ Textures {
+  ImageSetTextureClass {
+   mpix 1
+   path "{03C19429A4AF5287}EDDS/cyberware-imageset.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass 1 {
+   Name "1"
+   Pos 0 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 2 {
+   Name "2"
+   Pos 178 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 3 {
+   Name "3"
+   Pos 356 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 4 {
+   Name "4"
+   Pos 534 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 5 {
+   Name "5"
+   Pos 712 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 6 {
+   Name "6"
+   Pos 890 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 7 {
+   Name "7"
+   Pos 1068 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 8 {
+   Name "8"
+   Pos 1246 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 9 {
+   Name "9"
+   Pos 1424 0
+   Size 178 178
+   Flags 0
+  }
+  ImageSetDefClass 10 {
+   Name "10"
+   Pos 1602 0
+   Size 178 178
+   Flags 0
+  }
+ }
+ Groups {
+ }
+}

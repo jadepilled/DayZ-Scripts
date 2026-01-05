@@ -1,0 +1,86 @@
+DayZ Cyberware mod overview
+-Cyberware works as an additional attachment to the body, allowing the user to attach "cyberware" to its corresponding slot, in order to gain active effects. For now, we don't need to show anything visually *on* the character, just in the UI.
+
+Frontal Cortex:
+Kerenzikov Boost System: Reduces stamina usage by 15%.
+Kerenzikov Overclock: Reduces stamina usage by 35%.
+Mechatronic Core: Reduces shock damage by 40%.
+Dexterity Modulator: Reduces time taken to complete interactions by 50%. 
+Newton Module: Reduces cyberware cooldowns by 2% per enemy killed.
+Quantum Tuner: Repairs all damaged items in inventory once every 20 minutes.
+Cryoregulator: Prevents the body from over or under-heating.
+
+Operating System:
+Chrome Compressor: +1 Cyberware Slot 
+Berserk: Activate to reduce incoming damage by 50%, become unable to be killed, no stamina use, and double damage for 10 seconds. Cannot use any items for 60 seconds after use. 
+
+Weapons
+Cyberarm (50% speed increase when carrying large items, melee attacks do double damage)
+Gorilla Arms (100% speed when carrying large items, melee attacks do quadruple damage, are always "heavy")
+Mantis Blades
+Monowire
+
+Optics
+Image Enhancer: 2x enhanced base zoom level
+Behavioral Imprint-synced Faceplate: Harder to be seen by zombies 
+Kiroshi Monovision Optics: Highlights enemies when they are first seen for 5 seconds
+TeleOptics: 3x Enhanced base zoom level
+Radiation Detector: Traps and explosives are visible at all times
+Kiroshi "Oracle" Optics: Thermal vision when activated 
+
+Skeleton
+Bionic Joints: Increased armour 
+Dense Marrow: Higher melee damage, higher melee stamina cost 
+Epimorphic Skeleton: 10% Increase to max health 
+Kinetic Frame: 8% Chance to automatically mitigate damage from bullets while above 80% stamina
+Para Bellum: Increased armour
+Rara Avis: Increased armour
+Scar Coalescer: Increased armour while below 50% health
+Scarab: Increased armour + move speed while crouched
+Titanium Bones: Increased carrying capacity 
+
+Hands
+Microgenerator: extra shock damage + damage over time on first shot after reloading
+Shock Absorber: Reduces weapon recoil by 20%
+Cyberarm: Reduces time for all object uses by 50%.
+Dynalar Pro Cyberhand: Decreases reloading speed by 30%.
+Big Knucks: Increases base unarmed and melee attack damage by 30% and headshot damage by 25%.
+
+Nervous System
+Adrenaline Converter: 10% Increased movement speed for 10 seconds when entering combat 
+Adreno-trigger: 20% increased movement speed for 20 seconds when entering combat
+Atomic Sensors: Base move speed increased by 5%
+Kerenzikov: Allows you to aim while reloading
+Reflex Tuner: Replenishes 50% HP when below 25% HP
+Revulsor: Replenishes 25% HP when below 25% HP
+Stabber: All attacks with melee weapons count as heavy attacks
+Tyrosine Injector: 20% increased movement speed for 20 seconds when killing an enemy
+
+
+Circulatory System
+Biomonitor: automatically bandages wounds when bleeding occurs
+Blood Pump: Passively regenerate 1 health per 20 seconds. 
+Microrotors: Increases melee attack speed by 40%
+Second Heart: Automatically revive upon death after 15 seconds and with 50% HP. 
+Tactile Boost: 30% increased movement speed while below 25% HP 
+
+Integumentary System
+Carapace: All armour is more effective on the wearer 
+Chitin: Greatly improved ballistic resistance 
+Cogito Lattice: Improved armour when below 25% HP 
+Pain Editor: All incoming damage reduced by 5%
+Painducer: Incoming damage is converted into damage over time 
+Shock-n-Awe: 10% chance to release an electric shock when damaged 
+Subdermal Armor: Increases armour by 50%.
+Heavy subdermal plating: Increases armour by 30% and shock resistance by 50%.
+Kiroshi Optishield: Blocks 1 projectile or melee attack when attacked. Takes 2 minutes to recharge.
+
+Legs
+Fortified Ankles: Jump height increased to 10 meters. No fall damage up to 15 meters.
+Rocklin Augmentics Skydrivers: Double movement speed for 20 seconds when activated. 2 minute recovery. 
+Romanova Cyberlegs: 15% base movement speed increase. 
+Lynx Paws: Movement makes 50% less noise. Fall damage reduced by 35%. Legs cannot be broken by falling. 
+Reinforced Tendons: No fall damage up to 20m, 50% stamina cost reduction while sprinting.
+Zero Gravity Thrusters: Jump height increased to 3m, no fall damage up to 15m, jump while mid air to double jump.
+Jump Booster: Jump height increased to 5m, no fall damage up to 15m.
+
