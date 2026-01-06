@@ -31,21 +31,3 @@ class SkyRemasterSky
         SetSkyPreset(SKY_PRESET_NAME, 0.0, dayTime);
     }
 }
-
-modded class MissionServer
-{
-    override void OnInit()
-    {
-        super.OnInit();
-        SkyRemasterSky.Apply();
-    }
-}
-
-modded class MissionGameplay
-{
-    override void OnInit()
-    {
-        super.OnInit();
-        SkyRemasterSky.Apply();
-    }
-}

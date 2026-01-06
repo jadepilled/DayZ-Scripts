@@ -5,7 +5,7 @@ class CfgPatches
         units[] = {};
         weapons[] = {};
         requiredVersion = 0.1;
-        requiredAddons[] = {"DZ_Data","DZ_Scripts","DZ_Worlds_Chernarusplus","DZ_Worlds_Enoch"};
+        requiredAddons[] = {"DZ_Data","DZ_Scripts","DZ_Worlds_Chernarusplus","DZ_Worlds_Enoch","DZ_Missions"};
     };
 };
 
@@ -26,7 +26,7 @@ class CfgMods
         extra = 0;
         type = "mod";
 
-        dependencies[] = {"World"};
+        dependencies[] = {"World","Mission"};
 
         class defs
         {
@@ -34,6 +34,11 @@ class CfgMods
             {
                 value = "World";
                 files[] = {"SkyRemaster/scripts/4_world"};
+            };
+            class missionScriptModule
+            {
+                value = "Mission";
+                files[] = {"SkyRemaster/scripts/5_mission"};
             };
         };
     };
