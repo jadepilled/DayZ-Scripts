@@ -27,6 +27,15 @@ class CfgMods
         type = "mod";
 
         dependencies[] = {"World"};
+
+        class defs
+        {
+            class worldScriptModule
+            {
+                value = "World";
+                files[] = {"SkyRemaster/scripts/4_world"};
+            };
+        };
     };
 };
 
