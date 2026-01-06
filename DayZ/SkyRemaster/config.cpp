@@ -26,10 +26,15 @@ class CfgMods
         extra = 0;
         type = "mod";
 
-        dependencies[] = {"World","Mission"};
+        dependencies[] = {"Game","World","Mission"};
 
         class defs
         {
+            class gameScriptModule
+            {
+                value = "Game";
+                files[] = {"SkyRemaster/scripts/3_game"};
+            };
             class worldScriptModule
             {
                 value = "World";
