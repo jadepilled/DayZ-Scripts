@@ -1,0 +1,3 @@
+prefix=DZ\animals\
+product=dayz
+version=112650

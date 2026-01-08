@@ -1,0 +1,3 @@
+prefix=DZ\gear\camping\
+product=dayz
+version=112725

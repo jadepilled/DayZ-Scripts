@@ -1,0 +1,3 @@
+prefix=DZ\weapons\proxies\
+product=dayz
+version=111085

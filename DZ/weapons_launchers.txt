@@ -1,0 +1,3 @@
+prefix=DZ\weapons\launchers\
+product=dayz
+version=111085

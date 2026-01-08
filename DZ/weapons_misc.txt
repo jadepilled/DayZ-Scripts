@@ -1,0 +1,3 @@
+prefix=DZ\weapons\misc\
+product=dayz
+version=111085

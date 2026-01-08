@@ -1,0 +1,3 @@
+prefix=DZ\characters\headgear\
+product=dayz
+version=112662

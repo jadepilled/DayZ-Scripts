@@ -1,0 +1,3 @@
+prefix=DZ\characters\zombies\
+product=dayz
+version=112725

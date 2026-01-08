@@ -1,0 +1,3 @@
+prefix=DZ\weapons\shotguns\
+product=dayz
+version=111597

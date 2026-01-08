@@ -1,0 +1,3 @@
+prefix=DZ\plants_sakhal\
+product=dayz sakhal
+version=112550

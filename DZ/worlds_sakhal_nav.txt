@@ -1,0 +1,3 @@
+prefix=DZ\worlds\sakhal\navmesh\
+product=dayz sakhal
+version=112331

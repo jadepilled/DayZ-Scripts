@@ -1,0 +1,3 @@
+prefix=DZ\weapons\explosives\
+product=dayz
+version=111085

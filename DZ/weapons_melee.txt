@@ -1,0 +1,3 @@
+prefix=DZ\weapons\melee\
+product=dayz
+version=111748

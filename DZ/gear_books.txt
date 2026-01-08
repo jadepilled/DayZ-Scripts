@@ -1,0 +1,3 @@
+prefix=DZ\gear\books\
+product=dayz
+version=112725

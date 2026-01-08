@@ -1,0 +1,3 @@
+prefix=DZ\AI\
+product=dayz
+version=112650

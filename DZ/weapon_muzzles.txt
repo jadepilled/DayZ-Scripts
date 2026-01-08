@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\muzzle\
+product=dayz
+version=111590

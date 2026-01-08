@@ -1,0 +1,3 @@
+prefix=DZ\structures\wrecks\
+product=dayz
+version=112248

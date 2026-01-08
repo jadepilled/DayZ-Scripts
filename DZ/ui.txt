@@ -1,0 +1,3 @@
+prefix=DZ\ui\
+product=dayz
+version=112684

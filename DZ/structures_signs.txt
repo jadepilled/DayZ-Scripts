@@ -1,0 +1,3 @@
+prefix=DZ\structures\signs\
+product=dayz
+version=111777

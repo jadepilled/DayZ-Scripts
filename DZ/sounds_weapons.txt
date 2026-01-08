@@ -1,0 +1,3 @@
+prefix=DZ\sounds\weapons\
+product=dayz
+version=111777

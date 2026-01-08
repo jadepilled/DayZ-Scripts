@@ -1,0 +1,3 @@
+prefix=DZ\weapons\projectiles\
+product=dayz
+version=111856

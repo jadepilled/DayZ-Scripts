@@ -1,0 +1,3 @@
+prefix=DZ\weapons\firearms\
+product=dayz
+version=111588

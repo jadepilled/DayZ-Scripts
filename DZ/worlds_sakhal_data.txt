@@ -1,0 +1,3 @@
+prefix=DZ\worlds\sakhal\data\
+product=dayz sakhal
+version=112316

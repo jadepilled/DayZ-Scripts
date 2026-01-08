@@ -1,0 +1,3 @@
+prefix=DZ\rocks_sakhal\
+product=dayz sakhal
+version=112550

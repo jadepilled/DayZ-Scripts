@@ -1,0 +1,3 @@
+prefix=DZ\worlds\enoch\navmesh\
+product=dayz bliss
+version=112252

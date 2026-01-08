@@ -1,0 +1,3 @@
+prefix=DZ\characters\shoes\
+product=dayz
+version=112662

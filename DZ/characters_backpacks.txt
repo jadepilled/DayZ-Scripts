@@ -1,0 +1,3 @@
+prefix=DZ\characters\backpacks\
+product=dayz
+version=112650

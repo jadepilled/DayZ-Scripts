@@ -1,0 +1,3 @@
+prefix=DZ\structures\Proxy_BuildingParts\
+product=dayz
+version=111777

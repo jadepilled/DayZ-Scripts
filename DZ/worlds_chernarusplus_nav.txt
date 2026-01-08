@@ -1,0 +1,3 @@
+prefix=DZ\worlds\chernarusplus\navmesh\
+product=dayz
+version=112251

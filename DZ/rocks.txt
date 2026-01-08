@@ -1,0 +1,3 @@
+prefix=DZ\rocks\
+product=dayz
+version=112550

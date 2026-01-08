@@ -1,0 +1,3 @@
+prefix=DZ\AI_bliss\
+product=dayz bliss
+version=112650

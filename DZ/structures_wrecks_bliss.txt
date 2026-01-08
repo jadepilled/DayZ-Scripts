@@ -1,0 +1,3 @@
+prefix=DZ\structures_bliss\wrecks\
+product=dayz bliss
+version=111777

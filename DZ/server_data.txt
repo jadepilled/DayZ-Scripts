@@ -1,0 +1,3 @@
+prefix=DZ\server\
+product=dayz
+version=112550

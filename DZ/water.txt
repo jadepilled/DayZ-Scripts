@@ -1,0 +1,3 @@
+prefix=DZ\water\
+product=dayz
+version=111777

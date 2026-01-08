@@ -1,0 +1,3 @@
+prefix=DZ\structures\industrial\
+product=dayz
+version=112046

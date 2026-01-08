@@ -1,0 +1,3 @@
+prefix=DZ\gear\navigation\
+product=dayz
+version=112848

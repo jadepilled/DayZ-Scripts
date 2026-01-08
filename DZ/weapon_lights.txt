@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\light\
+product=dayz
+version=111085

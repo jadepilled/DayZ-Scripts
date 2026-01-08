@@ -1,0 +1,3 @@
+prefix=DZ\anims\anm\player\
+product=dayz
+version=112650

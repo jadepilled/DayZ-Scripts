@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\support\
+product=dayz
+version=111591

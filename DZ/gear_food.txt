@@ -1,0 +1,3 @@
+prefix=DZ\gear\food\
+product=dayz
+version=112848

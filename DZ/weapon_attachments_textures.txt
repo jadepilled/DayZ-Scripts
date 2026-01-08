@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\data\
+product=dayz
+version=111386

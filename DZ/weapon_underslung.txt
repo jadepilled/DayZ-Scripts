@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\underslung\
+product=dayz
+version=111085

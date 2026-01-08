@@ -1,0 +1,3 @@
+prefix=DZ\gear\cooking\
+product=dayz
+version=112725

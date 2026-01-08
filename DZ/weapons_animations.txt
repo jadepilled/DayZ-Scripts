@@ -1,0 +1,3 @@
+prefix=DZ\weapons\animations\
+product=dayz
+version=111085

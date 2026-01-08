@@ -1,0 +1,3 @@
+prefix=DZ\characters\tops\
+product=dayz
+version=112662

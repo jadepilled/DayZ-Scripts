@@ -1,0 +1,3 @@
+prefix=DZ\characters\bodies\
+product=dayz
+version=112662

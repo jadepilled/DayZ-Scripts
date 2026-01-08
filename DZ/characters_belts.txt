@@ -1,0 +1,3 @@
+prefix=DZ\characters\belts\
+product=dayz
+version=105264

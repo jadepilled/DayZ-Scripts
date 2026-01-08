@@ -1,0 +1,3 @@
+prefix=DZ\vehicles\water\
+product=dayz
+version=111777

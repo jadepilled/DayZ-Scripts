@@ -1,0 +1,3 @@
+prefix=DZ\data_bliss\
+product=dayz bliss
+version=112725

@@ -1,0 +1,3 @@
+prefix=DZ\worlds\sakhal\ce\
+product=dayz sakhal
+version=112295

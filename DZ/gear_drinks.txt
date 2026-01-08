@@ -1,0 +1,3 @@
+prefix=DZ\gear\drinks\
+product=dayz
+version=112848

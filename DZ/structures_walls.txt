@@ -1,0 +1,3 @@
+prefix=DZ\structures\walls\
+product=dayz
+version=111777

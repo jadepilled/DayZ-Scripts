@@ -1,0 +1,3 @@
+prefix=DZ\structures\rail\
+product=dayz
+version=111777

@@ -1,0 +1,3 @@
+prefix=DZ\worlds\chernarusplus\world\
+product=dayz
+version=111672

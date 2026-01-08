@@ -1,0 +1,3 @@
+prefix=DZ\characters\vests\
+product=dayz
+version=109104

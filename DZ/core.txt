@@ -1,0 +1,3 @@
+prefix=Core\
+product=undefined
+version=111208

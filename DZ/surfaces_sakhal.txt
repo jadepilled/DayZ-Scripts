@@ -1,0 +1,3 @@
+prefix=DZ\surfaces_sakhal\
+product=dayz sakhal
+version=111777

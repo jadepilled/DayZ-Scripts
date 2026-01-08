@@ -1,0 +1,3 @@
+prefix=DZ\characters\heads\
+product=dayz
+version=112662

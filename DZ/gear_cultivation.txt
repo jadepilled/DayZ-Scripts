@@ -1,0 +1,3 @@
+prefix=DZ\gear\cultivation\
+product=dayz
+version=110743

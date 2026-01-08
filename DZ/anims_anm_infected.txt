@@ -1,0 +1,3 @@
+prefix=DZ\anims\anm\infected\
+product=dayz
+version=112650

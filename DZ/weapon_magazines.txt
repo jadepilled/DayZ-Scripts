@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\magazine\
+product=dayz
+version=111590

@@ -1,0 +1,3 @@
+prefix=DZ\weapons\attachments\optics\
+product=dayz
+version=112299

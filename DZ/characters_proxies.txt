@@ -1,0 +1,3 @@
+prefix=DZ\characters\proxies\
+product=dayz
+version=112662
