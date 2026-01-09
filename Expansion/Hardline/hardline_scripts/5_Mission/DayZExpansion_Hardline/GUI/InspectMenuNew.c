@@ -11,7 +11,7 @@
 */
 
 modded class InspectMenuNew
-{	
+{
 	override Widget Init()
 	{
 		if (Expansion_UseCustomLayout())
@@ -22,7 +22,7 @@ modded class InspectMenuNew
 		{
 			layoutRoot = super.Init();
 		}
-		
+
 		return layoutRoot;
 	}
 
@@ -31,8 +31,9 @@ modded class InspectMenuNew
 		if (Expansion_UseCustomLayout())
 		{
 			InspectMenuNew.Expansion_UpdateItemInfoRarity(layoutRoot, item);
+			InspectMenuNew.Expansion_UpdateItemInfoTier(layoutRoot, item);
 		}
-		
+
 		super.SetItem(item);
 	}
 
@@ -40,7 +41,7 @@ modded class InspectMenuNew
 	{
 		return "DayZExpansion/Hardline/GUI/layouts/expansion_inventory_inspect.layout";
 	}
-	
+
 	static bool Expansion_UseCustomLayout()
 	{
 		return GetExpansionSettings().GetHardline().EnableItemRarity;
@@ -72,5 +73,40 @@ modded class InspectMenuNew
 		}
 
 		rarityElement.Show(false);
+	}
+
+	static void Expansion_UpdateItemInfoTier(Widget root_widget, EntityAI item)
+	{
+		ImageWidget tierElement = ImageWidget.Cast(root_widget.FindAnyWidget("ItemTierWidgetBackground"));
+		if (!tierElement)
+			return;
+
+		ExpansionHardlineSettings settings = GetExpansionSettings().GetHardline(false);
+		if (!settings.IsLoaded() || !settings.EnableItemRarity)
+		{
+			tierElement.Show(false);
+			return;
+		}
+
+		ItemBase itemBase = ItemBase.Cast(item);
+		if (itemBase)
+		{
+			int tier = itemBase.Expansion_GetTier();
+			if (tier < 0)
+			{
+				tierElement.Show(false);
+				return;
+			}
+
+			string tierName = "Tier" + tier;
+			string text = "#" + "STR_EXPANSION_HARDLINE_TIER_" + tier;
+			int color;
+			ExpansionStatic.GetVariableIntByName(ExpansionHardlineItemTierColor, tierName, color);
+			tierElement.Show(true);
+			WidgetTrySetText(root_widget, "ItemTierWidget", text, color);
+			return;
+		}
+
+		tierElement.Show(false);
 	}
 };
