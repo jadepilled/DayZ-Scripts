@@ -2,22 +2,13 @@ modded class WeaponManager
 {
 	protected bool ShouldExitSightsOnWeaponAction()
 	{
-		switch (m_PendingWeaponAction)
-		{
-			case AT_WPN_ATTACH_MAGAZINE:
-			case AT_WPN_SWAP_MAGAZINE:
-			case AT_WPN_DETACH_MAGAZINE:
-			case AT_WPN_LOAD_BULLET:
-			case AT_WPN_LOAD_MULTI_BULLETS_START:
-			case AT_WPN_LOAD_MULTI_BULLETS_END:
-			case AT_WPN_EJECT_BULLET:
-				return false;
-		}
+		if (m_PendingWeaponAction == AT_WPN_EJECT_BULLET && m_WeaponInHand && m_WeaponInHand.IsInherited(BoltActionRifle_Base))
+			return false;
 
 		return true;
 	}
 
-	// Based on DayZ/4_world/classes/weapons/weaponmanager.c Update; adjusted to preserve ADS during reload/chamber actions.
+	// Based on DayZ/4_world/classes/weapons/weaponmanager.c Update; adjusted to preserve ADS during bolt cycling.
 	override void Update(float deltaT)
 	{
 		if (m_WeaponInHand != m_player.GetItemInHands())
