@@ -1,0 +1,20 @@
+WrapSpacerWidgetClass ItemTagsContainer
+{
+    visible 1
+    clipchildren 1
+    inheritalpha 0
+    ignorepointer 1
+    color 1 1 1 0
+    position -0.4 -0.42
+    size 0.8 0.01
+    halign center_ref
+    valign center_ref
+    hexactpos 0
+    vexactpos 0
+    hexactsize 0
+    vexactsize 0
+    priority 1
+    orientation horizontal
+    spacex 0.01
+    spacey 0.01
+}
