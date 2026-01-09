@@ -1,4 +1,4 @@
-ImageWidgetClass ItemRarityWidgetBackground {
+ImageWidgetClass ItemRarityModWidgetBackground {
    visible 1
    clipchildren 0
    inheritalpha 0
@@ -18,7 +18,7 @@ ImageWidgetClass ItemRarityWidgetBackground {
    "src alpha" 0
    filter 1
    {
-    TextWidgetClass ItemRarityWidget {
+    TextWidgetClass ItemRarityModWidget {
      visible 1
      inheritalpha 0
      size 1 1
