@@ -2,7 +2,7 @@
 
 class CfgPatches
 {
-	class TP_drone
+	class PsyOps_Drone
 	{
 		units[] = {"TP_Drone","mb_Shield","DeliveryCrate","DeliveryCrate_Yellow","TP_Tablet"};
 		weapons[] = {};
@@ -12,14 +12,14 @@ class CfgPatches
 };
 class CfgMods
 {
-	class TP_drone
+	class PsyOps_Drone
 	{
-		dir = "drone";
+		dir = "PsyOps_Drone";
 		picture = "";
 		action = "";
 		hideName = 1;
 		hidePicture = 1;
-		name = "TP_drone";
+		name = "PsyOps_Drone";
 		credits = "";
 		author = "psyopgirl";
 		authorID = "";
@@ -32,17 +32,17 @@ class CfgMods
 			class worldScriptModule
 			{
 				value = "";
-				files[] = {"drone/scripts/4_World"};
+				files[] = {"PsyOps_Drone/scripts/4_World"};
 			};
 			class gameScriptModule
 			{
 				value = "";
-				files[] = {"drone/scripts/3_Game"};
+				files[] = {"PsyOps_Drone/scripts/3_Game"};
 			};
 			class missionScriptModule
 			{
 				value = "";
-				files[] = {"drone/scripts/5_Mission"};
+				files[] = {"PsyOps_Drone/scripts/5_Mission"};
 			};
 		};
 	};
@@ -60,11 +60,11 @@ class CfgVehicles
 		scope = 2;
 		displayName = "TP Drone";
 		descriptionShort = "";
-		model = "drone\data\drone_shield.p3d";
+		model = "PsyOps_Drone\data\drone_shield.p3d";
 		itemSize[] = {4,4};
 		weight = 100;
 		hiddenSelections[] = {"shield"};
-		hiddenSelectionsTextures[] = {"drone\data\hex_full.paa"};
+		hiddenSelectionsTextures[] = {"PsyOps_Drone\data\hex_full.paa"};
 		class DamageSystem
 		{
 			class GlobalHealth
@@ -91,9 +91,9 @@ class CfgVehicles
 		scope = 2;
 		displayName = "mb_Shield";
 		descriptionShort = "";
-		model = "drone\shield.p3d";
+		model = "PsyOps_Drone\shield.p3d";
 		hiddenSelections[] = {"shield"};
-		hiddenSelectionsTextures[] = {"drone\data\hex_full.paa"};
+		hiddenSelectionsTextures[] = {"PsyOps_Drone\data\hex_full.paa"};
 		class DamageSystem
 		{
 			class GlobalHealth
@@ -110,7 +110,7 @@ class CfgVehicles
 	{
 		scope = 2;
 		displayName = "DeliveryCrate";
-		model = "drone\data\drone_crate.p3d";
+		model = "PsyOps_Drone\data\drone_crate.p3d";
 		descriptionShort = "";
 		class Cargo
 		{
@@ -123,7 +123,7 @@ class CfgVehicles
 	{
 		scope = 2;
 		displayName = "PsyOps Delivery Crate";
-		model = "drone\data\drone_crate.p3d";
+		model = "PsyOps_Drone\data\drone_crate.p3d";
 		descriptionShort = "PsyOps Corporation Standard Delivery Crate.";
 		class Cargo
 		{
@@ -135,14 +135,14 @@ class CfgVehicles
 	class TP_Tablet: GPSReceiver
 	{
 		scope = 2;
-		model = "drone\data\tablet.p3d";
+		model = "PsyOps_Drone\data\tablet.p3d";
 		displayName = "PsyOps Drone Tablet";
 		descriptionShort = "A tablet with the PsyOps Corp logo on the back. Can be used to call drone deliveries.";
 		itemSize[] = {2,1};
 		weight = 0.5;
 		rotationFlags = 63;
 		hiddenSelections[] = {"screen"};
-		hiddenSelectionsTextures[] = {"drone\data\tablet_off_co.paa"};
+		hiddenSelectionsTextures[] = {"PsyOps_Drone\data\tablet_off_co.paa"};
 		inventorySlot[] = {""};
 		class DamageSystem
 		{
@@ -161,7 +161,7 @@ class CfgSoundShaders
 {
 	class drone_soundshader
 	{
-		samples[] = {{"drone\sounds\drone.ogg",1}};
+		samples[] = {{"PsyOps_Drone\sounds\drone.ogg",1}};
 		range = 150;
 		volume = 2;
 	};

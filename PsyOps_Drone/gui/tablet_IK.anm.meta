@@ -1,7 +1,7 @@
 MetaFileClass {
- Name "{1F2CBBB096D792AC}drone/anm/tablet_IK.anm"
+ Name "{90B9BD93F68B80BF}PsyOps_Drone/gui/tablet_IK.anm"
  Author "desktop-0bjbbis"
- ChangeDate 662499652
+ ChangeDate 1289580867
  Configurations {
   TXAResourceClass PC {
    SourceFile "tablet_IK.txa"

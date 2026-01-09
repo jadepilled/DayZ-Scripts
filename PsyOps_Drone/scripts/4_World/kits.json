@@ -1,0 +1,40 @@
+{
+  "kits": [
+    {
+      "name": "Builder Starter",
+      "kit_description": "Basic planks and tools to get started.",
+      "category": "Construction",
+      "items": [
+        {
+          "class_name": "WoodenPlank",
+          "quantity": 10
+        },
+        {
+          "class_name": "NailBox",
+          "quantity": 1
+        },
+        {
+          "class_name": "Hacksaw",
+          "quantity": 1
+        }
+      ],
+      "price": 100
+    },
+    {
+      "name": "Ammo Pack",
+      "kit_description": "Two calibers for resupply.",
+      "category": "Ammunition",
+      "items": [
+        {
+          "class_name": "AmmoBox_556x45_20Rnd",
+          "quantity": 2
+        },
+        {
+          "class_name": "AmmoBox_762x54_20Rnd",
+          "quantity": 2
+        }
+      ],
+      "price": 150
+    }
+  ]
+}

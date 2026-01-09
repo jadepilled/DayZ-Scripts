@@ -39,7 +39,7 @@ class ActionTurnOnTablet : ActionSingleUseBase
 			if (action_data.m_MainItem.GetCompEM().CanWork())
 			{
 				action_data.m_MainItem.GetCompEM().SwitchOn();
-				action_data.m_MainItem.SetObjectTexture(0, "drone\\data\\tablet_co.paa");
+				action_data.m_MainItem.SetObjectTexture(0, "PsyOps_Drone\\data\\tablet_co.paa");
 			}
 		}
 	}
