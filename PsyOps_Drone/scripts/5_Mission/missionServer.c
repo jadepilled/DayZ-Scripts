@@ -114,7 +114,7 @@ class PlayerKitDataManager {
     }
 
     string GetPlayerDataFilePath(string playerId) {
-        string folderPath = "$profile:\\MT_Drone\\PlayerData\\";
+        string folderPath = "$profile:\\PsyOps_Drone\\PlayerData\\";
         if (!FileExist(folderPath)) {
             MakeDirectory(folderPath);
         }
@@ -141,11 +141,11 @@ modded class MissionServer {
     }
 
     void LoadDroneKitsConfig() {
-        string folderPath = "$profile:\\MT_Drone";
+        string folderPath = "$profile:\\PsyOps_Drone";
         string filePath = folderPath + "\\kits.json";
 
         if (!FileExist(folderPath)) {
-            Print("MT_Drone folder does NOT exist at: " + folderPath + ". Creating folder.");
+            Print("PsyOps_Drone folder does NOT exist at: " + folderPath + ". Creating folder.");
             MakeDirectory(folderPath);
         }
 
@@ -153,7 +153,7 @@ modded class MissionServer {
             Print("kits.json file does NOT exist at: " + filePath);
 
             KitDataManager defaultKitDataManager = new KitDataManager();
-            defaultKitDataManager.kits = CreateDefaultKits();
+            defaultKitDataManager.categories = CreateDefaultKits();
             JsonFileLoader<KitDataManager>.JsonSaveFile(filePath, defaultKitDataManager);
 
             Print("Default kits.json file created at: " + filePath);
@@ -165,23 +165,39 @@ modded class MissionServer {
         if (!loaded) {
             Print("MT_Error: Failed to load kits from JSON on the server.");
         } else {
-            Print("Successfully loaded kits on the server. Number of kits loaded: " + kitDataManager.GetKits().Count());
+            Print("Successfully loaded kits on the server. Number of categories loaded: " + kitDataManager.GetCategories().Count());
         }
     }
 
-	ref array<ref DeliveryKit> CreateDefaultKits() {
-		ref array<ref DeliveryKit> defaultKits = new array<ref DeliveryKit>();
+	ref array<ref DeliveryKitCategory> CreateDefaultKits() {
+		ref array<ref DeliveryKitCategory> defaultCategories = new array<ref DeliveryKitCategory>();
 
-		defaultKits.Insert(new DeliveryKit("Daily Supplies", "Free Daily Crate Contains BandageDressing,WaterBottle,Matchbox",
-			{"BandageDressing", "WaterBottle", "Matchbox"}, 0, true, 86400));
+        ref array<ref DeliveryKitItem> dailyItems = new array<ref DeliveryKitItem>();
+        dailyItems.Insert(new DeliveryKitItem("BandageDressing", 2));
+        dailyItems.Insert(new DeliveryKitItem("WaterBottle", 1));
+        dailyItems.Insert(new DeliveryKitItem("Matchbox", 1));
+        ref array<ref DeliveryKit> dailyKits = new array<ref DeliveryKit>();
+        dailyKits.Insert(new DeliveryKit("Daily Supplies", "Free Daily Crate Contains BandageDressing, WaterBottle, Matchbox", dailyItems, 0, true, 86400, "Daily"));
+        defaultCategories.Insert(new DeliveryKitCategory("Daily", dailyKits));
 
-		defaultKits.Insert(new DeliveryKit("Medical Supplies", "This kit contains: FirstAidKit, BandageDressing, Morphine, SalineBagIV",
-			{"FirstAidKit", "BandageDressing", "Morphine", "SalineBagIV"}, 6500, false, 60));
+        ref array<ref DeliveryKitItem> medicalItems = new array<ref DeliveryKitItem>();
+        medicalItems.Insert(new DeliveryKitItem("FirstAidKit", 1));
+        medicalItems.Insert(new DeliveryKitItem("BandageDressing", 2));
+        medicalItems.Insert(new DeliveryKitItem("Morphine", 1));
+        medicalItems.Insert(new DeliveryKitItem("SalineBagIV", 1));
+        ref array<ref DeliveryKit> medicalKits = new array<ref DeliveryKit>();
+        medicalKits.Insert(new DeliveryKit("Medical Supplies", "This kit contains: FirstAidKit, BandageDressing, Morphine, SalineBagIV", medicalItems, 6500, false, 60, "Medical"));
+        defaultCategories.Insert(new DeliveryKitCategory("Medical", medicalKits));
 
-		defaultKits.Insert(new DeliveryKit("Basic Building Supplies", "This kit contains: WoodenPlank, BoxNails, Hammer",
-			{"WoodenPlank", "NailBox", "Hammer"}, 1500, false, 60));
+        ref array<ref DeliveryKitItem> buildingItems = new array<ref DeliveryKitItem>();
+        buildingItems.Insert(new DeliveryKitItem("WoodenPlank", 10));
+        buildingItems.Insert(new DeliveryKitItem("NailBox", 1));
+        buildingItems.Insert(new DeliveryKitItem("Hammer", 1));
+        ref array<ref DeliveryKit> buildingKits = new array<ref DeliveryKit>();
+        buildingKits.Insert(new DeliveryKit("Basic Building Supplies", "This kit contains: WoodenPlank, NailBox, Hammer", buildingItems, 1500, false, 60, "Building"));
+        defaultCategories.Insert(new DeliveryKitCategory("Building", buildingKits));
 
-		return defaultKits;
+		return defaultCategories;
 	}
 
 
@@ -333,19 +349,19 @@ modded class MissionServer {
 
     void SendKitsToClient(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target) {
         if (type == CallType.Server && sender) {
-            int chunkSize = 1;  // Number of kits to send per RPC
-            int totalKits = kitDataManager.GetKits().Count();
+            int chunkSize = 1;  // Number of categories to send per RPC
+            int totalCategories = kitDataManager.GetCategories().Count();
 
-            for (int i = 0; i < totalKits; i += chunkSize) {
-                array<ref DeliveryKit> kitChunk = new array<ref DeliveryKit>();
+            for (int i = 0; i < totalCategories; i += chunkSize) {
+                array<ref DeliveryKitCategory> categoryChunk = new array<ref DeliveryKitCategory>();
 
-                for (int j = i; j < Math.Min(i + chunkSize, totalKits); j++) {
-                    kitChunk.Insert(kitDataManager.GetKits().Get(j));
+                for (int j = i; j < Math.Min(i + chunkSize, totalCategories); j++) {
+                    categoryChunk.Insert(kitDataManager.GetCategories().Get(j));
                 }
 
                 string kitsJson;
                 JsonSerializer js = new JsonSerializer();
-                js.WriteToString(kitChunk, false, kitsJson);
+                js.WriteToString(categoryChunk, false, kitsJson);
 
                 Param1<string> data = new Param1<string>(kitsJson);
                 GetRPCManager().SendRPC("drone", "ReceiveKitsFromServer", data, false, sender);
@@ -447,27 +463,9 @@ void SpawnDroneRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, 
         }
 
         // Find the selected kit
-        DeliveryKit selectedKit;
-        bool isValidKit = false;
-        array<ref DeliveryKit> kits = kitDataManager.GetKits();
+        DeliveryKit selectedKit = kitDataManager.FindKitByName(kitName);
 
-        if (!kits || kits.Count() == 0)
-        {
-            Print("MT_Error: No kits loaded on the server.");
-            return;
-        }
-
-        foreach (DeliveryKit kit : kits)
-        {
-            if (kit && kit.name == kitName)
-            {
-                selectedKit = kit;
-                isValidKit = true;
-                break;
-            }
-        }
-
-        if (!isValidKit)
+        if (!selectedKit)
         {
             Print("MT_Error: Player " + sender.GetName() + " attempted to spawn an invalid kit: " + kitName);
             SendNotificationToPlayer(targetPlayer, "Drone Store Info", "Invalid kit selected.", "set:dayz_gui image:icon_error");
@@ -549,8 +547,22 @@ void SpawnDroneRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, 
         }
         SendNotificationToPlayer(targetPlayer, "Drone Store Info", purchaseMessage, "set:dayz_gui image:icon_success");
 
+        ref array<string> lootItems = new array<string>();
+        foreach (DeliveryKitItem kitItem : selectedKit.items)
+        {
+            if (!kitItem || kitItem.className == "" || kitItem.quantity <= 0)
+            {
+                continue;
+            }
+
+            for (int i = 0; i < kitItem.quantity; i++)
+            {
+                lootItems.Insert(kitItem.className);
+            }
+        }
+
         DroneSpawner spawner = new DroneSpawner();
-        spawner.SpawnDrone(targetPlayer, spawnPosition, selectedKit.items);
+        spawner.SpawnDrone(targetPlayer, spawnPosition, lootItems);
     }
 }
 
