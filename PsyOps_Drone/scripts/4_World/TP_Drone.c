@@ -11,7 +11,7 @@ class TP_Drone extends ItemBase
     float ascentSpeed = 0.1;
     bool crateAttached = false;
     Container_Base DronewoodenCrate;
-    ref array<string> mt_LootArray; 
+    ref array<ref DeliveryKitItem> mt_LootArray; 
     protected EffectSound m_DroneEventSound;
 
     void TP_Drone()
@@ -42,7 +42,7 @@ class TP_Drone extends ItemBase
         bool soundPlayed = PlaySoundSetLoop(m_DroneEventSound, "drone_soundset", 0.1, 0.1);
     }
 
-    void InitDrone(PlayerBase player, ref array<string> lootItems) 
+    void InitDrone(PlayerBase player, ref array<ref DeliveryKitItem> lootItems) 
     {
         targetPlayer = player;
         mt_LootArray = lootItems;
@@ -148,13 +148,25 @@ class TP_Drone extends ItemBase
         }
     }
 
-    void FillCrateWithLoot(Container_Base crate, ref array<string> lootItems) 
+    void FillCrateWithLoot(Container_Base crate, ref array<ref DeliveryKitItem> lootItems) 
     {
         if (crate)
         {
-            foreach (string itemName : lootItems)
+            foreach (DeliveryKitItem kitItem : lootItems)
             {
-                EntityAI lootItem = crate.GetInventory().CreateInInventory(itemName);
+                if (!kitItem) {
+                    continue;
+                }
+
+                string itemName = kitItem.class_name;
+                int quantity = kitItem.quantity;
+                if (quantity < 1) {
+                    quantity = 1;
+                }
+
+                for (int i = 0; i < quantity; i++) {
+                    crate.GetInventory().CreateInInventory(itemName);
+                }
             }
         }
     }
@@ -188,7 +200,7 @@ class TP_Drone extends ItemBase
 
 class DroneSpawner
 {
-    void SpawnDrone(PlayerBase targetPlayer, vector spawnPosition, ref array<string> lootItems)
+    void SpawnDrone(PlayerBase targetPlayer, vector spawnPosition, ref array<ref DeliveryKitItem> lootItems)
     {
         TP_Drone drone = TP_Drone.Cast(GetGame().CreateObject("TP_Drone", spawnPosition));
 

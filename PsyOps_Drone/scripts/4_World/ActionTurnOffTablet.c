@@ -39,7 +39,7 @@ class ActionTurnOffTablet : ActionSingleUseBase
 	{
 		action_data.m_MainItem.GetCompEM().SwitchOff();
 
-		action_data.m_MainItem.SetObjectTexture(0, "drone\\data\\tablet_off_co.paa");
+		action_data.m_MainItem.SetObjectTexture(0, "PsyOps_Drone\\data\\tablet_off_co.paa");
 	}
 
 }

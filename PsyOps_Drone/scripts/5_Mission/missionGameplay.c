@@ -6,9 +6,9 @@ modded class MissionGameplay {
 
     void MissionGameplay() {
         if (GetGame().IsClient()) {
-            GetRPCManager().AddRPC("drone", "OpenDroneBuyMenuUI", this, SingeplayerExecutionType.Client);
-            GetRPCManager().AddRPC("drone", "ReceiveKitsFromServer", this, SingeplayerExecutionType.Client);
-            GetRPCManager().AddRPC("drone", "ReceivePlayerBalanceRPC", this, SingeplayerExecutionType.Client);
+            GetRPCManager().AddRPC("psyops_drone", "OpenDroneBuyMenuUI", this, SingeplayerExecutionType.Client);
+            GetRPCManager().AddRPC("psyops_drone", "ReceiveKitsFromServer", this, SingeplayerExecutionType.Client);
+            GetRPCManager().AddRPC("psyops_drone", "ReceivePlayerBalanceRPC", this, SingeplayerExecutionType.Client);
         }
 
         kitDataManager = new KitDataManager();
@@ -18,7 +18,7 @@ modded class MissionGameplay {
     }
 
     void SendKitsRPC() {
-        GetRPCManager().SendRPC("drone", "SendKitsToClient", null, true);
+        GetRPCManager().SendRPC("psyops_drone", "SendKitsToClient", null, true);
     }
 
     void ReceivePlayerBalanceRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target) {
@@ -67,6 +67,10 @@ modded class MissionGameplay {
             }
 
             Print("Received chunk of kits. Total kits loaded: " + kitDataManager.GetKits().Count());
+
+            if (m_DroneBuyMenuUI && m_IsDroneBuyMenuUIOpen) {
+                m_DroneBuyMenuUI.InitializeMenu();
+            }
         }
     }
 
@@ -102,7 +106,7 @@ modded class MissionGameplay {
                 m_DroneBuyMenuUI.InitializeMenu();
             } else {
                 
-                GetRPCManager().SendRPC("drone", "SendKitsToClient", null, true);
+                GetRPCManager().SendRPC("psyops_drone", "SendKitsToClient", null, true);
             }
         }
         m_IsDroneBuyMenuUIOpen = true;

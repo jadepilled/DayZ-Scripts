@@ -114,7 +114,7 @@ class PlayerKitDataManager {
     }
 
     string GetPlayerDataFilePath(string playerId) {
-        string folderPath = "$profile:\\MT_Drone\\PlayerData\\";
+        string folderPath = "$profile:\\PsyOps_Drone\\PlayerData\\";
         if (!FileExist(folderPath)) {
             MakeDirectory(folderPath);
         }
@@ -130,9 +130,9 @@ modded class MissionServer {
     override void OnInit() {
         super.OnInit();
 
-        GetRPCManager().AddRPC("drone", "SpawnDroneRPC", this, SingeplayerExecutionType.Server);
-        GetRPCManager().AddRPC("drone", "SendKitsToClient", this, SingeplayerExecutionType.Server);
-        GetRPCManager().AddRPC("drone", "GetPlayerBalanceRPC", this, SingeplayerExecutionType.Server);
+        GetRPCManager().AddRPC("psyops_drone", "SpawnDroneRPC", this, SingeplayerExecutionType.Server);
+        GetRPCManager().AddRPC("psyops_drone", "SendKitsToClient", this, SingeplayerExecutionType.Server);
+        GetRPCManager().AddRPC("psyops_drone", "GetPlayerBalanceRPC", this, SingeplayerExecutionType.Server);
 
         playerKitDataManager = new PlayerKitDataManager();
 
@@ -141,11 +141,11 @@ modded class MissionServer {
     }
 
     void LoadDroneKitsConfig() {
-        string folderPath = "$profile:\\MT_Drone";
+        string folderPath = "$profile:\\PsyOps_Drone";
         string filePath = folderPath + "\\kits.json";
 
         if (!FileExist(folderPath)) {
-            Print("MT_Drone folder does NOT exist at: " + folderPath + ". Creating folder.");
+            Print("PsyOps_Drone folder does NOT exist at: " + folderPath + ". Creating folder.");
             MakeDirectory(folderPath);
         }
 
@@ -163,7 +163,7 @@ modded class MissionServer {
         bool loaded = kitDataManager.LoadKitsFromFile(filePath);
 
         if (!loaded) {
-            Print("MT_Error: Failed to load kits from JSON on the server.");
+            Print("PsyOps_Drone: Failed to load kits from JSON on the server.");
         } else {
             Print("Successfully loaded kits on the server. Number of kits loaded: " + kitDataManager.GetKits().Count());
         }
@@ -172,14 +172,14 @@ modded class MissionServer {
 	ref array<ref DeliveryKit> CreateDefaultKits() {
 		ref array<ref DeliveryKit> defaultKits = new array<ref DeliveryKit>();
 
-		defaultKits.Insert(new DeliveryKit("Daily Supplies", "Free Daily Crate Contains BandageDressing,WaterBottle,Matchbox",
-			{"BandageDressing", "WaterBottle", "Matchbox"}, 0, true, 86400));
+		defaultKits.Insert(new DeliveryKit("Daily Supplies", "Free Daily Crate Contains BandageDressing, WaterBottle, Matchbox", "Supplies",
+			{new DeliveryKitItem("BandageDressing", 2), new DeliveryKitItem("WaterBottle", 1), new DeliveryKitItem("Matchbox", 1)}, 0, true, 86400));
 
-		defaultKits.Insert(new DeliveryKit("Medical Supplies", "This kit contains: FirstAidKit, BandageDressing, Morphine, SalineBagIV",
-			{"FirstAidKit", "BandageDressing", "Morphine", "SalineBagIV"}, 6500, false, 60));
+		defaultKits.Insert(new DeliveryKit("Medical Supplies", "This kit contains: FirstAidKit, BandageDressing, Morphine, SalineBagIV", "Medical",
+			{new DeliveryKitItem("FirstAidKit", 1), new DeliveryKitItem("BandageDressing", 4), new DeliveryKitItem("Morphine", 1), new DeliveryKitItem("SalineBagIV", 1)}, 6500, false, 60));
 
-		defaultKits.Insert(new DeliveryKit("Basic Building Supplies", "This kit contains: WoodenPlank, BoxNails, Hammer",
-			{"WoodenPlank", "NailBox", "Hammer"}, 1500, false, 60));
+		defaultKits.Insert(new DeliveryKit("Basic Building Supplies", "This kit contains: WoodenPlank, NailBox, Hammer", "Construction",
+			{new DeliveryKitItem("WoodenPlank", 10), new DeliveryKitItem("NailBox", 1), new DeliveryKitItem("Hammer", 1)}, 1500, false, 60));
 
 		return defaultKits;
 	}
@@ -219,9 +219,9 @@ modded class MissionServer {
 
             if (success) {
                 Param1<int> data = new Param1<int>(playerBalance);
-                GetRPCManager().SendRPC("drone", "ReceivePlayerBalanceRPC", data, true, sender);
+                GetRPCManager().SendRPC("psyops_drone", "ReceivePlayerBalanceRPC", data, true, sender);
             } else {
-                Print("MT_Error: Failed to get player balance for " + sender.GetName());
+                Print("PsyOps_Drone: Failed to get player balance for " + sender.GetName());
             }
         }
     }
@@ -348,7 +348,7 @@ modded class MissionServer {
                 js.WriteToString(kitChunk, false, kitsJson);
 
                 Param1<string> data = new Param1<string>(kitsJson);
-                GetRPCManager().SendRPC("drone", "ReceiveKitsFromServer", data, false, sender);
+                GetRPCManager().SendRPC("psyops_drone", "ReceiveKitsFromServer", data, false, sender);
             }
         }
     }
@@ -432,7 +432,7 @@ void SpawnDroneRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, 
         Param2<vector, string> data;
         if (!ctx.Read(data))
         {
-            Print("MT_Error: Failed to read RPC data.");
+            Print("PsyOps_Drone: Failed to read RPC data.");
             return;
         }
 
@@ -442,7 +442,7 @@ void SpawnDroneRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, 
         PlayerBase targetPlayer = GetPlayerByIdentity(sender);
         if (!targetPlayer)
         {
-            Print("MT_Error: Could not find PlayerBase for sender " + sender.GetName());
+            Print("PsyOps_Drone: Could not find PlayerBase for sender " + sender.GetName());
             return;
         }
 
@@ -453,7 +453,7 @@ void SpawnDroneRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, 
 
         if (!kits || kits.Count() == 0)
         {
-            Print("MT_Error: No kits loaded on the server.");
+            Print("PsyOps_Drone: No kits loaded on the server.");
             return;
         }
 
@@ -469,7 +469,7 @@ void SpawnDroneRPC(CallType type, ParamsReadContext ctx, PlayerIdentity sender, 
 
         if (!isValidKit)
         {
-            Print("MT_Error: Player " + sender.GetName() + " attempted to spawn an invalid kit: " + kitName);
+            Print("PsyOps_Drone: Player " + sender.GetName() + " attempted to spawn an invalid kit: " + kitName);
             SendNotificationToPlayer(targetPlayer, "Drone Store Info", "Invalid kit selected.", "set:dayz_gui image:icon_error");
             return;
         }
@@ -728,7 +728,7 @@ bool ProcessLBmasterBanking(PlayerIdentity sender, PlayerBase targetPlayer, int 
 
     PlayerBase GetPlayerByIdentity(PlayerIdentity identity) {
         if (!identity) {
-            Print("MT_Error: Identity is null.");
+            Print("PsyOps_Drone: Identity is null.");
             return null;
         }
 
@@ -743,7 +743,7 @@ bool ProcessLBmasterBanking(PlayerIdentity sender, PlayerBase targetPlayer, int 
             }
         }
 
-        Print("MT_Error: No player found for the given identity.");
+        Print("PsyOps_Drone: No player found for the given identity.");
         return null;
     }
 }

@@ -1,10 +1,10 @@
 MetaFileClass {
- Name "{D4BCEE3CE8FC66B6}drone/anm/ActionOnce.ItemTriggerErc.Once.anm"
+ Name "{1F2CBBB096D792AC}PsyOps_Drone/anm/tablet_IK.anm"
  Author "desktop-0bjbbis"
- ChangeDate 867021124
+ ChangeDate 662499652
  Configurations {
   TXAResourceClass PC {
-   SourceFile "ActionOnce.ItemTriggerErc.Once.txa"
+   SourceFile "tablet_IK.txa"
   }
   TXAResourceClass XBOX_ONE : PC {
   }

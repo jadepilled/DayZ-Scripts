@@ -1,0 +1,49 @@
+PanelWidgetClass KitItemRowWidget {
+ visible 1
+ size 0.98 38
+ hexactpos 0
+ vexactpos 0
+ hexactsize 0
+ vexactsize 1
+ {
+  ItemPreviewWidgetClass KitItemPreviewWidget {
+   visible 1
+   clipchildren 1
+   ignorepointer 1
+   position 0 0
+   size 38 38
+   hexactpos 0
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+  }
+  TextWidgetClass KitItemNameWidget {
+   ignorepointer 1
+   position 48 3
+   size 0.7 32
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "ITEM NAME"
+   font "gui/fonts/MetronLight22"
+   "exact text" 1
+   "text halign" left
+   "text valign" center
+  }
+  TextWidgetClass KitItemQuantityWidget {
+   ignorepointer 1
+   position 0.86 3
+   size 0.12 32
+   hexactpos 0
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   text "x1"
+   font "gui/fonts/MetronLight22"
+   "exact text" 1
+   "text halign" right
+   "text valign" center
+  }
+ }
+}

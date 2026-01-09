@@ -64,7 +64,7 @@ override void OnExecuteServer(ActionData action_data)
         spawnPosition[1] = groundY + 99;
 
         // Define the loot array that will be placed inside the drone's crate
-        array<string> lootArray = { "AKM", "AmmoBox", "CanOpener", "Canteen" };
+        array<ref DeliveryKitItem> lootArray = { new DeliveryKitItem("AKM", 1), new DeliveryKitItem("AmmoBox", 1), new DeliveryKitItem("CanOpener", 1), new DeliveryKitItem("Canteen", 1) };
 
         // Create a new DroneSpawner instance
         DroneSpawner spawner = new DroneSpawner();

@@ -25,16 +25,15 @@ class ActionOpenDroneShop : ActionSingleUseBase
 
     override bool ActionCondition(PlayerBase player, ActionTarget target, ItemBase item)
     {
-		//return item.IsTurnedOn();
-		return item.GetCompEM() && item.GetCompEM().IsWorking()&& item.IsInherited(TP_Tablet);
-       // return item && item.IsInherited(TP_Tablet);  
+		// Based on Scripts/4_world/entities/itembase/gear/navigation/gpsreceiver.c : IsTurnedOn()
+		return item && item.IsInherited(TP_Tablet) && item.HasEnergyManager() && item.GetCompEM().IsSwitchedOn();
     }
 
 	override void OnExecuteServer(ActionData action_data)
 	{
 		super.OnExecuteServer(action_data);
 			Param1<int> param = new Param1<int>(1);
-			GetRPCManager().SendRPC("drone", "OpenDroneBuyMenuUI", param, true, action_data.m_Player.GetIdentity());
+			GetRPCManager().SendRPC("psyops_drone", "OpenDroneBuyMenuUI", param, true, action_data.m_Player.GetIdentity());
 	}
 
     override void OnExecuteClient(ActionData action_data)

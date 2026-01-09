@@ -14,7 +14,7 @@ FrameWidgetClass rootFrame {
    vexactpos 1
    hexactsize 1
    vexactsize 1
-   imageTexture "{19E445681525EB00}drone/gui/tablet_UI2.edds"
+   imageTexture "{19E445681525EB00}PsyOps_Drone/gui/tablet_UI2.edds"
    mode blend
    "src alpha" 1
    "stretch mode" stretch_w_h
@@ -23,7 +23,7 @@ FrameWidgetClass rootFrame {
      ignorepointer 1
      color 0.9255 0.9255 0.9255 1
      position 412.11301 73.8605
-     size 966.43903 479.431
+     size 966.43903 278.431
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -33,10 +33,33 @@ FrameWidgetClass rootFrame {
      "exact text" 1
      wrap 1
     }
+    EditBoxWidgetClass SearchEditBoxWidget {
+     color 0.29 0.29 0.29 1
+     position 51.3774 73.8605
+     size 323.556 30.7427
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     font "gui/fonts/MetronLight22"
+     "text color" 0.9255 0.9255 0.9255 1
+     text ""
+    }
+    XComboBoxWidgetClass CategoryComboBoxWidget {
+     color 0.29 0.29 0.29 1
+     position 51.3774 109.605
+     size 323.556 30.7427
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     font "gui/fonts/MetronLight22"
+     "text color" 0.9255 0.9255 0.9255 1
+    }
     TextListboxWidgetClass KitsTextListboxWidget {
      color 0.29 0.29 0.29 1
-     position 51.3774 117.032
-     size 323.556 450.45798
+     position 51.3774 145.106
+     size 323.556 422.38398
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -46,6 +69,34 @@ FrameWidgetClass rootFrame {
      lines 30
      font "gui/fonts/MetronLight22"
      "text color" 0.9255 0.9255 0.9255 1
+    }
+    ScrollWidgetClass KitItemsScrollWidget {
+     visible 1
+     clipchildren 1
+     ignorepointer 0
+     keepsafezone 1
+     position 412.11301 360.8605
+     size 966.43903 192.431
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     priority 1
+     style blank
+     "Scrollbar V" 1
+     {
+      WrapSpacerWidgetClass KitItemsWrapSpacerWidget {
+       visible 1
+       ignorepointer 1
+       size 1 0.5
+       halign left
+       hexactpos 0
+       vexactpos 0
+       hexactsize 0
+       vexactsize 0
+       "Size To Content V" 1
+      }
+     }
     }
     ButtonWidgetClass OrderButtonWidget {
      color 0.4 0.4 0.4 1
