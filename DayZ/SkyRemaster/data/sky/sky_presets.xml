@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Skies>
+    <!--
+        Custom sky preset that points the skydome color layer at our detailed texture.
+        This relies on the SkyDome API exposed in proto.c to load and initialize the preset.
+    -->
+    <SkyPreset name="SkyRemaster">
+        <ColorTexture>SkyRemaster/data/tex/sky_co.paa</ColorTexture>
+    </SkyPreset>
+</Skies>

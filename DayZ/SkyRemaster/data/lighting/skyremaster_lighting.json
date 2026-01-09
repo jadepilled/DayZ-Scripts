@@ -1,0 +1,8 @@
+[
+    {
+        "name": "SkyRemaster",
+        "skyTexture": "SkyRemaster/data/tex/sky_co.paa",
+        "skyTextureNight": "SkyRemaster/data/tex/sky_co.paa",
+        "skyTextureR": "SkyRemaster/data/tex/sky_co.paa"
+    }
+]
