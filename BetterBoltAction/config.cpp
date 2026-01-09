@@ -1,13 +1,13 @@
 class CfgMods
 {
-	class ADSReload
+	class BetterBoltAction
 	{
-		dir="ADSReload";
+		dir="BetterBoltAction";
 		picture="";
 		action="";
 		hideName=1;
 		hidePicture=1;
-		name="ADS Reload";
+		name="Better Bolt Action";
 		author="OpenAI";
 		authorID="0";
 		version="1.0";
@@ -24,7 +24,7 @@ class CfgMods
 				value="";
 				files[]=
 				{
-					"ADSReload/scripts/4_world"
+					"BetterBoltAction/scripts/4_world"
 				};
 			};
 		};
@@ -32,7 +32,7 @@ class CfgMods
 };
 class CfgPatches
 {
-	class ADSReload
+	class BetterBoltAction
 	{
 		units[]={};
 		weapons[]={};
