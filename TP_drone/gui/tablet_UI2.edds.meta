@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{60E00DF5841F0E5E}EDDS/tablet_UI2.edds"
+ Author "desktop-eihqemt"
+ ChangeDate -1263685029
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "tablet_UI2.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

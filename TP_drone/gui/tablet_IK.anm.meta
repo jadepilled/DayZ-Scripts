@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{90B9BD93F68B80BF}drone/gui/tablet_IK.anm"
+ Author "desktop-0bjbbis"
+ ChangeDate 1289580867
+ Configurations {
+  TXAResourceClass PC {
+   SourceFile "tablet_IK.txa"
+  }
+  TXAResourceClass XBOX_ONE : PC {
+  }
+  TXAResourceClass PS4 : PC {
+  }
+  TXAResourceClass LINUX : PC {
+  }
+ }
+}

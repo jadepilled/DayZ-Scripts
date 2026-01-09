@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{D4BCEE3CE8FC66B6}drone/anm/ActionOnce.ItemTriggerErc.Once.anm"
+ Author "desktop-0bjbbis"
+ ChangeDate 867021124
+ Configurations {
+  TXAResourceClass PC {
+   SourceFile "ActionOnce.ItemTriggerErc.Once.txa"
+  }
+  TXAResourceClass XBOX_ONE : PC {
+  }
+  TXAResourceClass PS4 : PC {
+  }
+  TXAResourceClass LINUX : PC {
+  }
+ }
+}

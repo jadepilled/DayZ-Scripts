@@ -1,0 +1,94 @@
+FrameWidgetClass rootFrame {
+ position 170.49599 110.592
+ size 1472.12 860.948
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ {
+  ImageWidgetClass BackGroundImageWidget {
+   ignorepointer 1
+   position 24.1539 21.979
+   size 1424.3501 812.026
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   imageTexture "{19E445681525EB00}drone/gui/tablet_UI2.edds"
+   mode blend
+   "src alpha" 1
+   "stretch mode" stretch_w_h
+   {
+    MultilineTextWidgetClass DescriptionMultilineTextWidget {
+     ignorepointer 1
+     color 0.9255 0.9255 0.9255 1
+     position 412.11301 73.8605
+     size 966.43903 479.431
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Description of selected kit contents"
+     font "gui/fonts/MetronLight28"
+     "exact text" 1
+     wrap 1
+    }
+    TextListboxWidgetClass KitsTextListboxWidget {
+     color 0.29 0.29 0.29 1
+     position 51.3774 117.032
+     size 323.556 450.45798
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     "title visible" 0
+     colums "     Delivery Kits"
+     lines 30
+     font "gui/fonts/MetronLight22"
+     "text color" 0.9255 0.9255 0.9255 1
+    }
+    ButtonWidgetClass OrderButtonWidget {
+     color 0.4 0.4 0.4 1
+     position 931.93005 563.78705
+     size 461.63602 30.7427
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+    }
+    TextWidgetClass PriceTextWidget {
+     ignorepointer 1
+     color 0.9255 0.9255 0.9255 1
+     position 521.60297 562.93604
+     size 399.125 31.3943
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Bold
+     text "0"
+     font "gui/fonts/etelkatextpro"
+     "exact text" 1
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass PlayerCashTextWidget {
+     ignorepointer 1
+     color 0.9255 0.9255 0.9255 1
+     position 367.18201 756.53998
+     size 399.125 32.6372
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Bold
+     text "0"
+     font "gui/fonts/etelkatextpro"
+     "exact text" 1
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+ }
+}

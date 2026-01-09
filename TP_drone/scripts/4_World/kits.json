@@ -1,0 +1,16 @@
+{
+  "delivery_kits": [
+    {
+      "name": "Kit 1",
+      "kit_description": "Description of Kit 1",
+      "items": ["WoodenPlank", "NailBox", "Hacksaw"],
+      "price": 100
+    },
+    {
+      "name": "Kit 2",
+      "kit_description": "Description of Kit 2",
+      "items": ["AmmoBox_556x45_20Rnd", "AmmoBox_762x54_20Rnd"],
+      "price": 150
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{833B45B791698539}drone/anm/tablet_Click.anm"
+ Author "desktop-0bjbbis"
+ ChangeDate 1835905348
+ Configurations {
+  TXAResourceClass PC {
+   SourceFile "tablet_Click.txa"
+  }
+  TXAResourceClass XBOX_ONE : PC {
+  }
+  TXAResourceClass PS4 : PC {
+  }
+  TXAResourceClass LINUX : PC {
+  }
+ }
+}
