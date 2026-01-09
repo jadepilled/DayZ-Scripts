@@ -2,7 +2,7 @@
 
 class CfgPatches
 {
-	class TP_drone
+	class PsyOps_Drone
 	{
 		units[] = {"TP_Drone","mb_Shield","DeliveryCrate","DeliveryCrate_Yellow","TP_Tablet"};
 		weapons[] = {};
@@ -12,14 +12,14 @@ class CfgPatches
 };
 class CfgMods
 {
-	class TP_drone
+	class PsyOps_Drone
 	{
 		dir = "drone";
 		picture = "";
 		action = "";
 		hideName = 1;
 		hidePicture = 1;
-		name = "TP_drone";
+		name = "PsyOps_Drone";
 		credits = "";
 		author = "psyopgirl";
 		authorID = "";

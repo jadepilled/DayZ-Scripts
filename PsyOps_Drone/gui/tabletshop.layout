@@ -23,7 +23,7 @@ FrameWidgetClass rootFrame {
      ignorepointer 1
      color 0.9255 0.9255 0.9255 1
      position 412.11301 73.8605
-     size 966.43903 479.431
+     size 966.43903 176.5
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -33,19 +33,65 @@ FrameWidgetClass rootFrame {
      "exact text" 1
      wrap 1
     }
+    EditBoxWidgetClass SearchEditBoxWidget {
+     color 0.2 0.2 0.2 1
+     position 51.3774 73.8605
+     size 323.556 30.7427
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Search kits..."
+     font "gui/fonts/MetronLight22"
+     "exact text" 1
+    }
+    TextListboxWidgetClass CategoryListboxWidget {
+     color 0.29 0.29 0.29 1
+     position 51.3774 111.032
+     size 323.556 120
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     "title visible" 0
+     colums "     Categories"
+     lines 6
+     font "gui/fonts/MetronLight22"
+     "text color" 0.9255 0.9255 0.9255 1
+    }
     TextListboxWidgetClass KitsTextListboxWidget {
      color 0.29 0.29 0.29 1
-     position 51.3774 117.032
-     size 323.556 450.45798
+     position 51.3774 241.032
+     size 323.556 326.45798
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 1
      "title visible" 0
      colums "     Delivery Kits"
-     lines 30
+     lines 20
      font "gui/fonts/MetronLight22"
      "text color" 0.9255 0.9255 0.9255 1
+    }
+    ScrollWidgetClass KitItemsScrollWidget {
+     position 412.11301 260.0
+     size 966.43903 280
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     clipchildren 1
+     {
+      WrapSpacerWidgetClass KitItemsContentWidget {
+       clipchildren 0
+       size 1 1
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       "Size To Content V" 1
+      }
+     }
     }
     ButtonWidgetClass OrderButtonWidget {
      color 0.4 0.4 0.4 1

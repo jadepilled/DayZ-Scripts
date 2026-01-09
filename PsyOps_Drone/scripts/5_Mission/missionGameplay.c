@@ -53,20 +53,18 @@ modded class MissionGameplay {
             string kitsJson = data.param1;
 
             JsonSerializer js = new JsonSerializer();
-            array<ref DeliveryKit> kitsChunk;
+            array<ref DeliveryKitCategory> categoriesChunk;
             string error;
-            bool success = js.ReadFromString(kitsChunk, kitsJson, error);
+            bool success = js.ReadFromString(categoriesChunk, kitsJson, error);
 
             if (!success) {
                 Print("Failed to deserialize kits data: " + error);
                 return;
             }
 
-            foreach (DeliveryKit kit : kitsChunk) {
-                kitDataManager.GetKits().Insert(kit);
-            }
+            kitDataManager.AddCategories(categoriesChunk);
 
-            Print("Received chunk of kits. Total kits loaded: " + kitDataManager.GetKits().Count());
+            Print("Received chunk of kit categories. Total categories loaded: " + kitDataManager.GetCategories().Count());
         }
     }
 
@@ -98,7 +96,7 @@ modded class MissionGameplay {
             m_DroneBuyMenuUI.SetMenuOpen(true);
             m_DroneBuyMenuUI.SetKitDataManager(kitDataManager);
 			//SendKitsRPC();
-            if (kitDataManager.GetKits().Count() > 0) {
+            if (kitDataManager.HasKits()) {
                 m_DroneBuyMenuUI.InitializeMenu();
             } else {
                 

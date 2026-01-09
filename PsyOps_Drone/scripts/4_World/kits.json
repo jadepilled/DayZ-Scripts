@@ -1,0 +1,59 @@
+{
+  "categories": [
+    {
+      "name": "Medical",
+      "kits": [
+        {
+          "name": "Medical Supplies",
+          "kit_description": "This kit contains medical supplies for emergencies.",
+          "category": "Medical",
+          "items": [
+            {"className": "FirstAidKit", "quantity": 1},
+            {"className": "BandageDressing", "quantity": 2},
+            {"className": "Morphine", "quantity": 1},
+            {"className": "SalineBagIV", "quantity": 1}
+          ],
+          "price": 6500,
+          "isFree": false,
+          "cooldown": 60
+        }
+      ]
+    },
+    {
+      "name": "Building",
+      "kits": [
+        {
+          "name": "Basic Building Supplies",
+          "kit_description": "This kit contains basic building resources.",
+          "category": "Building",
+          "items": [
+            {"className": "WoodenPlank", "quantity": 10},
+            {"className": "NailBox", "quantity": 1},
+            {"className": "Hammer", "quantity": 1}
+          ],
+          "price": 1500,
+          "isFree": false,
+          "cooldown": 60
+        }
+      ]
+    },
+    {
+      "name": "Daily",
+      "kits": [
+        {
+          "name": "Daily Supplies",
+          "kit_description": "Free daily supplies for quick restocking.",
+          "category": "Daily",
+          "items": [
+            {"className": "BandageDressing", "quantity": 2},
+            {"className": "WaterBottle", "quantity": 1},
+            {"className": "Matchbox", "quantity": 1}
+          ],
+          "price": 0,
+          "isFree": true,
+          "cooldown": 86400
+        }
+      ]
+    }
+  ]
+}

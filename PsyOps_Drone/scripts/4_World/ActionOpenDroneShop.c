@@ -25,9 +25,15 @@ class ActionOpenDroneShop : ActionSingleUseBase
 
     override bool ActionCondition(PlayerBase player, ActionTarget target, ItemBase item)
     {
-		//return item.IsTurnedOn();
-		return item.GetCompEM() && item.GetCompEM().IsWorking()&& item.IsInherited(TP_Tablet);
-       // return item && item.IsInherited(TP_Tablet);  
+        if (!item || !item.IsInherited(TP_Tablet)) {
+            return false;
+        }
+
+        if (item.HasEnergyManager()) {
+            return item.GetCompEM().CanWork();
+        }
+
+        return true;
     }
 
 	override void OnExecuteServer(ActionData action_data)
